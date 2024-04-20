@@ -7,11 +7,11 @@ export default function LoginPage() {
   return (
     <div className="flex">
       <div className="h-screen w-screen  flex-col justify-start">
-        <img className="w-1/5 ml-10 mt-10" src={anywhereLogo} alt="logo" />
+        <img className="w-48 ml-10 mt-10" src={anywhereLogo} alt="logo" />
         <p className="text-3xl mt-10 mb-20 text-customVermelho font-semibold text-center justify-start font-[inter] ">
           Estamos felizes em tê-lo de volta!
           <span
-            className={`text-2xl ${
+            className={`text-3xl ${
               window.innerWidth >= 2560 && window.innerWidth < 3440
                 ? "block"
                 : "inline-block"
