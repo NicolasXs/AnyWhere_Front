@@ -5,7 +5,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 export function Router() {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
     </Routes>
   );
 }
