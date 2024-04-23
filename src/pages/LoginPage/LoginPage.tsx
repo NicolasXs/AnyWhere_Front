@@ -5,7 +5,9 @@ import FormLogin from "./components/FormLogin";
 
 export default function LoginPage() {
   return (
-    <div className="flex">
+    <div
+      className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}
+    >
       <div className="h-screen w-screen  flex-col justify-start">
         <img
           className={`w-48 ml-10 mt-10 ${
