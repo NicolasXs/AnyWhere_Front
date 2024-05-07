@@ -26,6 +26,7 @@ import Wifi from "./img/OfferedServices/Wifi.svg";
 import NumberInputMinus from "./img/AccommodationInfo/NumberInputMinus.svg";
 import NumberInputPlus from "./img/AccommodationInfo/NumberInputPlus.svg";
 import { FileInput } from "./components/FileInput";
+import TitleAndDescription from "./components/TitleAndDescription";
 
 export default function PropertyRegister() {
   const [selectedDescription, setSelectedDescription] = useState<number | null>(
@@ -134,7 +135,7 @@ export default function PropertyRegister() {
   };
 
   // area das imagens
-  const onSubmit = () => {}
+  const onSubmit = () => {};
 
   return (
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
@@ -477,16 +478,24 @@ export default function PropertyRegister() {
             </div>
           </div>
         </div>
-
-        <div className={`mt-20 text-center`}>
-          <p className="text-2xl mb-0 font-[Poppins]">
-          Adicione fotos
-          </p>
+        {/* area de adicionar fotos */}
+        <div className="h-auto w-full ">
+          <div className={`mt-20 text-center`}>
+            <p className="text-2xl mb-0 font-[Poppins]">Adicione até 4 fotos</p>
           </div>
-        {/* area do dropzone */}
-        <form onSubmit={onSubmit} className="w-full h-72 flex justify-center items-center">
-          <FileInput />
-        </form>
+          {/* area do dropzone */}
+          <form
+            onSubmit={onSubmit}
+            className="w-full h-64 flex justify-center items-center"
+          >
+            <FileInput />
+          </form>
+        </div>
+
+        {/* area de titulo e descricão */}
+        <div className="flex justify-center align-center">
+          <TitleAndDescription />
+        </div>
       </div>
     </div>
   );

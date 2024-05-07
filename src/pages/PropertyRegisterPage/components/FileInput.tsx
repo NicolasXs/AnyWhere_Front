@@ -13,27 +13,29 @@ interface HasFileProps {
 }
 
 export const FileInput = () => {
-  const [files, setFiles] = useState<File[]>([]);
-
-  const removeFile = useCallback((index: number) => {
-    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-  }, []);
-
-  const onDrop = useCallback((newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-  }, []);
-
-  const dropzone = useDropzone({
-    onDrop,
-    accept: {
-      "image/jpeg": [],
-      "image/png": [],
-    },
-    multiple: true, // Permitir seleção de várias imagens
-  });
-
-  return <Input dropzone={dropzone} files={files} removeFile={removeFile} />;
-};
+    const [files, setFiles] = useState<File[]>([]);
+  
+    const removeFile = useCallback((index: number) => {
+      setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    }, []);
+  
+    const onDrop = useCallback((newFiles: File[]) => {
+      // Limitar o número total de arquivos a 4
+      const updatedFiles = [...files, ...newFiles].slice(0, 4);
+      setFiles(updatedFiles);
+    }, [files]);
+  
+    const dropzone = useDropzone({
+      onDrop,
+      accept: {
+        "image/jpeg": [],
+        "image/png": [],
+      },
+      multiple: true, // Permitir seleção de várias imagens
+    });
+  
+    return <Input dropzone={dropzone} files={files} removeFile={removeFile} />;
+  };
 
 const Input = ({ dropzone, files, removeFile }: InputProps & HasFileProps) => {
     const { getRootProps, getInputProps, isDragActive } = dropzone;
@@ -106,8 +108,8 @@ const HasFile = ({
   };
 
   return (
-    <div className="w-full ml-10">
-      <div className="bg-white flex items-center justify-center">
+    <div className=" ml-10 w-auto ">
+      <div className="bg-white flex items-center justify-center ">
         <img 
           src={imageUrl} 
           alt="Uploaded File" 
