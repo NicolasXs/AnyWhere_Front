@@ -25,6 +25,7 @@ import Wifi from "./img/OfferedServices/Wifi.svg";
 // import informações da acomodação
 import NumberInputMinus from "./img/AccommodationInfo/NumberInputMinus.svg";
 import NumberInputPlus from "./img/AccommodationInfo/NumberInputPlus.svg";
+import { FileInput } from "./components/FileInput";
 
 export default function PropertyRegister() {
   const [selectedDescription, setSelectedDescription] = useState<number | null>(
@@ -131,6 +132,9 @@ export default function PropertyRegister() {
       setSelectedServices(updatedServices);
     }
   };
+
+  // area das imagens
+  const onSubmit = () => {}
 
   return (
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
@@ -428,7 +432,7 @@ export default function PropertyRegister() {
         {/* Serviços da acomodação */}
         <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
           <div className="w-full flex-col justify-start">
-            <div className={`mt-20 mb-20 text-center`}>
+            <div className={`mt-20 mb-10 text-center`}>
               <p className="text-2xl mb-10">
                 Quais das seguintes opções descrevem os serviços de seu espaço?
               </p>
@@ -473,6 +477,16 @@ export default function PropertyRegister() {
             </div>
           </div>
         </div>
+
+        <div className={`mt-20 text-center`}>
+          <p className="text-2xl mb-0 font-[Poppins]">
+          Adicione fotos
+          </p>
+          </div>
+        {/* area do dropzone */}
+        <form onSubmit={onSubmit} className="w-full h-72 flex justify-center items-center">
+          <FileInput />
+        </form>
       </div>
     </div>
   );
