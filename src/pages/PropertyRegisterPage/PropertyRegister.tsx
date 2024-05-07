@@ -291,7 +291,6 @@ export default function PropertyRegister() {
 
         <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
           <div className=" w-full flex-col justify-start">
-            {/* Omissão do restante do código para brevidade */}
             <div className="flex items-center justify-center">
               <div className="w-full md:w-2/4 flex justify-between items-center mb-16">
                 <div className="flex items-center justify-center md:justify-start">
@@ -429,8 +428,6 @@ export default function PropertyRegister() {
         {/* Serviços da acomodação */}
         <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
           <div className="w-full flex-col justify-start">
-            {/* Omissão do restante do código para brevidade */}
-            {/* Serviços da acomodação */}
             <div className={`mt-20 mb-20 text-center`}>
               <p className="text-2xl mb-10">
                 Quais das seguintes opções descrevem os serviços de seu espaço?
