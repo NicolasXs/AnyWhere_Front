@@ -13,13 +13,14 @@ import Quarto from "./img/SpaceForGuests/Quarto.svg";
 import QuartoCompartilhado from "./img/SpaceForGuests/QuartoCompartilhado.svg";
 
 // imports de serviços oferecidos abaixo
-// import ArCondicionado from "./img/OfferedServices/ArCondicionado.svg";
-// import Churrasqueira from "./img/OfferedServices/Churrasqueira.svg";
-// import Cozinha from "./img/OfferedServices/Cozinha.svg";
-// import Estacionamento from "./img/OfferedServices/Estacionamento.svg";
-// import MaquinaDeLavar from "./img/OfferedServices/MaquinaDeLavar.svg";
-// import Piscina from "./img/OfferedServices/Piscina.svg";
-// import Wifi from "./img/OfferedServices/Wifi.svg";
+import ArCondicionado from "./img/OfferedServices/ArCondicionado.svg";
+import Churrasqueira from "./img/OfferedServices/Churrasqueira.svg";
+import Cozinha from "./img/OfferedServices/Cozinha.svg";
+import Estacionamento from "./img/OfferedServices/Estacionamento.svg";
+import MaquinaDeLavar from "./img/OfferedServices/MaquinaDeLavar.svg";
+import Piscina from "./img/OfferedServices/Piscina.svg";
+import TV from "./img/OfferedServices/TV.svg";
+import Wifi from "./img/OfferedServices/Wifi.svg";
 
 // import informações da acomodação
 import NumberInputMinus from "./img/AccommodationInfo/NumberInputMinus.svg";
@@ -51,6 +52,8 @@ export default function PropertyRegister() {
   const handleReferenceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReference(e.target.value);
   };
+
+  // área de number input abaixo
 
   const incrementGuests = () => {
     if (guests < 20) {
@@ -99,6 +102,7 @@ export default function PropertyRegister() {
       setBathrooms(bathrooms - 1);
     }
   };
+  // área de dados enviados abaixo
 
   // const handleSubmit = () => {
   //   // Aqui você pode enviar os dados para onde desejar
@@ -114,11 +118,25 @@ export default function PropertyRegister() {
   //   });
   // };
 
+  // área de serviços oferecidos abaixo
+  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+
+  const handleServiceClick = (index: number) => {
+    const selectedIndex = selectedServices.indexOf(index);
+    if (selectedIndex === -1) {
+      setSelectedServices([...selectedServices, index]);
+    } else {
+      const updatedServices = [...selectedServices];
+      updatedServices.splice(selectedIndex, 1);
+      setSelectedServices(updatedServices);
+    }
+  };
+
   return (
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
       <div className="h-screen w-screen flex-col justify-start">
         <img
-          className={`w-48 ml-10 mt-10 ${
+          className={`w-32 ml-10 mt-10 ${
             window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
           } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${
             window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
@@ -179,7 +197,9 @@ export default function PropertyRegister() {
               <button
                 key={index}
                 className={`flex flex-col items-center justify-center w-48 font-[inter] bg-white border border-solid border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
-                  selectedDescription === index ? "border-red-500" : ""
+                  selectedDescription === index
+                    ? "border-red-300 border-2 font-semibold	"
+                    : ""
                 }`}
                 type="button"
                 onClick={() => handleDescriptionClick(index)}
@@ -215,8 +235,10 @@ export default function PropertyRegister() {
             ].map((item, index) => (
               <button
                 key={index}
-                className={`flex flex-col items-center justify-center w-56 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
-                  selectedSpace === index ? "border-red-500" : ""
+                className={`flex flex-col items-center justify-center w-60 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
+                  selectedSpace === index
+                    ? "border-red-300 border-2 font-semibold	"
+                    : ""
                 }`}
                 type="button"
                 onClick={() => handleSpaceClick(index)}
@@ -268,7 +290,7 @@ export default function PropertyRegister() {
         {/* Informações da acomodação */}
 
         <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
-          <div className="h-screen w-full flex-col justify-start">
+          <div className=" w-full flex-col justify-start">
             {/* Omissão do restante do código para brevidade */}
             <div className="flex items-center justify-center">
               <div className="w-full md:w-2/4 flex justify-between items-center mb-16">
@@ -370,7 +392,7 @@ export default function PropertyRegister() {
             </div>
             {/* Banheiros */}
             <div className="flex items-center justify-center">
-              <div className="w-full md:w-2/4 flex justify-between items-center mb-16">
+              <div className="w-full md:w-2/4 flex justify-between items-center mb-0">
                 <div className="flex items-center justify-center md:justify-start">
                   <p className="text-2xl mb-0 font-[Poppins]">Banheiros</p>
                 </div>
@@ -399,6 +421,57 @@ export default function PropertyRegister() {
                     />
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Serviços da acomodação */}
+        <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
+          <div className="w-full flex-col justify-start">
+            {/* Omissão do restante do código para brevidade */}
+            {/* Serviços da acomodação */}
+            <div className={`mt-20 mb-20 text-center`}>
+              <p className="text-2xl mb-10">
+                Quais das seguintes opções descrevem os serviços de seu espaço?
+              </p>
+              <div className="inline-grid grid-cols-4 justify-center items-center gap-8">
+                {[
+                  { img: Wifi, label: "Wifi" },
+                  { img: TV, label: "TV" },
+                  { img: Piscina, label: "Piscina" },
+                  { img: MaquinaDeLavar, label: "Máquina de Lavar" },
+                  { img: Estacionamento, label: "Estacionamento" },
+                  { img: Cozinha, label: "Cozinha" },
+                  { img: Churrasqueira, label: "Churrasqueira" },
+                  { img: ArCondicionado, label: "Ar Condicionado" },
+                ].map((item, index) => (
+                  <button
+                    key={index}
+                    className={`flex flex-col items-center justify-center w-52 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
+                      selectedServices.includes(index)
+                        ? "border-red-300 border-2 font-semibold	"
+                        : ""
+                    }`}
+                    type="button"
+                    onClick={() => handleServiceClick(index)}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.label}
+                      className="w-17 h-16 mb-2"
+                    />
+                    <span
+                      className={`${
+                        selectedServices.includes(index)
+                          ? "text-red-500"
+                          : "text-black"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
