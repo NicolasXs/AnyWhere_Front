@@ -1,5 +1,5 @@
 import imgRigt from "./img/loginPageRightSide.svg";
-import anywhereLogo from "./img/Anywhere.svg";
+import anywhereLogo from "../../assets/images/Anywhere.svg";
 
 import FormLogin from "./components/FormLogin";
 
