@@ -21,7 +21,7 @@ export const FileInput = () => {
   
     const onDrop = useCallback((newFiles: File[]) => {
       // Limitar o número total de arquivos a 4
-      const updatedFiles = [...files, ...newFiles].slice(0, 10);
+      const updatedFiles = [...files, ...newFiles].slice(0, 100);
       setFiles(updatedFiles);
     }, [files]);
   
@@ -50,7 +50,7 @@ const Input = ({ dropzone, files, removeFile }: InputProps & HasFileProps) => {
     };
   
     // Dividir os arquivos em colunas de 2 itens cada
-    const columns = chunkArray(files, 4);
+    const columns = chunkArray(files, 3);
   
 
   return (

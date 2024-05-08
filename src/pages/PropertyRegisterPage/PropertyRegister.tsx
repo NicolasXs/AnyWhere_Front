@@ -60,7 +60,7 @@ export default function PropertyRegister() {
   // área de number input abaixo
 
   const incrementGuests = () => {
-    if (guests < 20) {
+    if (guests < 200) {
       setGuests(guests + 1);
     }
   };
@@ -324,7 +324,7 @@ export default function PropertyRegister() {
                     <img
                       src={NumberInputPlus}
                       alt="Plus"
-                      className={guests === 20 ? "opacity-20" : ""}
+                      className={guests === 200 ? "opacity-20" : ""}
                     />
                   </button>
                 </div>
@@ -357,7 +357,7 @@ export default function PropertyRegister() {
                     <img
                       src={NumberInputPlus}
                       alt="Plus"
-                      className={rooms === 20 ? "opacity-20" : ""}
+                      className={rooms === 200 ? "opacity-20" : ""}
                     />
                   </button>
                 </div>
@@ -390,7 +390,7 @@ export default function PropertyRegister() {
                     <img
                       src={NumberInputPlus}
                       alt="Plus"
-                      className={beds === 20 ? "opacity-20" : ""}
+                      className={beds === 200 ? "opacity-20" : ""}
                     />
                   </button>
                 </div>
@@ -423,7 +423,7 @@ export default function PropertyRegister() {
                     <img
                       src={NumberInputPlus}
                       alt="Plus"
-                      className={bathrooms === 20 ? "opacity-20" : ""}
+                      className={bathrooms === 200 ? "opacity-20" : ""}
                     />
                   </button>
                 </div>
