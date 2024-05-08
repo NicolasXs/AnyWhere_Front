@@ -1,5 +1,6 @@
 import anywhereLogo from "../../assets/images/Anywhere.svg";
 import { useState } from "react";
+import Footer from "../../components/Footer/Footer";
 
 // imports descrição do espaço abaixo
 import Apartamento from "./img/LocalDescription/Apartamento.svg";
@@ -136,7 +137,7 @@ export default function PropertyRegister() {
   };
 
   // area das imagens
-  const onSubmit = () => {};
+  // const onSubmit = () => {};
 
   return (
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
@@ -480,17 +481,20 @@ export default function PropertyRegister() {
           </div>
         </div>
         {/* area de adicionar fotos */}
-        <div className="h-96 w-full display">
-          <div className={`mt-20 text-center`}>
-            <p className="text-2xl mb-0 font-[Poppins]">Adicione até 4 fotos</p>
-          </div>
-          {/* area do dropzone */}
+        {/* <div className="h-96 w-full display">
+          
           <form
             onSubmit={onSubmit}
-            className="w-full h-64 flex justify-center items-center"
+            className="w-full h-20 flex justify-center items-center"
           >
-            <FileInput />
           </form>
+        </div> */}
+        <div className={`mt-20 text-center`}>
+          <p className="text-2xl mb-10 font-[Poppins]">Adicione fotos da sua propriedade</p>
+        </div>
+
+        <div className="h-auto w-full flex flex-col items-center">
+          <FileInput />
         </div>
 
         {/* area de titulo e descricão */}
@@ -501,9 +505,11 @@ export default function PropertyRegister() {
         {/* botao de cadastrar */}
 
         <div>
-          <RegisterButton/>
+          <RegisterButton />
         </div>
-
+        <div>
+          <Footer />
+        </div>
       </div>
     </div>
   );

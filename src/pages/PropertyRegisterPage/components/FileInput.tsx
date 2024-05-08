@@ -21,7 +21,7 @@ export const FileInput = () => {
   
     const onDrop = useCallback((newFiles: File[]) => {
       // Limitar o número total de arquivos a 4
-      const updatedFiles = [...files, ...newFiles].slice(0, 4);
+      const updatedFiles = [...files, ...newFiles].slice(0, 10);
       setFiles(updatedFiles);
     }, [files]);
   
@@ -50,17 +50,17 @@ const Input = ({ dropzone, files, removeFile }: InputProps & HasFileProps) => {
     };
   
     // Dividir os arquivos em colunas de 2 itens cada
-    const columns = chunkArray(files, 3);
+    const columns = chunkArray(files, 4);
   
 
   return (
     <div
       {...getRootProps()}
-      className={`w-2/6 h-32 rounded-lg border-dashed border-4 hover:border-gray-500 bg-gray-100 hover:bg-gray-100 transition-all
+      className={`w-3/6  rounded-lg border-dashed border-4 hover:border-gray-500 bg-gray-100 hover:bg-gray-100 transition-all
       ${isDragActive ? 'border-blue-500' : 'border-gray-500'}`}
     >
       <label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
-        <div className="flex flex-col items-center justify-center pt-5 pb-6 w-full h-full mb-10">
+        <div className="flex flex-col items-center justify-center pt-5 pb-4 w-full h-full mb-0">
           <UploadIcon
             className={`w-10 h-10 mb-3 ${isDragActive ? 'text-blue-500' : 'text-gray-400'}`}
           />
@@ -79,7 +79,7 @@ const Input = ({ dropzone, files, removeFile }: InputProps & HasFileProps) => {
       <div className="flex flex-wrap">
         {/* Mapear as colunas */}
         {columns.map((column, colIndex) => (
-          <div key={colIndex} className="flex">
+          <div key={colIndex} className="flex mr-6">
             {/* Mapear os arquivos dentro de cada coluna */}
             {column.map((file, index) => (
               <HasFile key={index} file={file} removeFile={() => removeFile(index + colIndex * 3)} />
@@ -109,7 +109,7 @@ const HasFile = ({
 
   return (
     <div className=" ml-10 w-auto ">
-      <div className="bg-white flex items-center justify-center ">
+      <div className=" flex items-center justify-center ">
         <img 
           src={imageUrl} 
           alt="Uploaded File" 
