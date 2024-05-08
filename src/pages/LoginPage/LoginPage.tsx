@@ -6,9 +6,9 @@ import FormLogin from "./components/FormLogin";
 export default function LoginPage() {
   return (
     <div
-      className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}
+      className={`flex min-h-screen ${window.innerWidth < 500 ? "p-5" : "p-0"}`}
     >
-      <div className="h-screen w-screen  flex-col justify-start">
+      <div className="w-screen flex-1  flex-col justify-start">
         <img
           className={`w-48 ml-10 mt-10 ${
             window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
@@ -54,9 +54,9 @@ export default function LoginPage() {
         <FormLogin />
       </div>
       <div
-        className={`bg-customCiano h-screen  w-screen items-center justify-center hidden md:flex ${""}`}
+        className={`bg-customCiano flex-1 w-screen items-center justify-center hidden md:flex ${""}`}
       >
-        <img className="w-3/4" src={imgRigt} alt="imagem lado direito" />
+        <img className="w-3/4 pointer-events-none" src={imgRigt} alt="imagem lado direito" />
       </div>
     </div>
   );
