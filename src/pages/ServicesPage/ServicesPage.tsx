@@ -9,15 +9,25 @@ interface Service {
     value: number;
 }
 
+interface PixData {
+    qrecode: string;
+    value: string;
+}
+
+interface BoletoData {
+    barcode: string;
+    value: string;
+}
+
 export default function ServicesPage() {
     const [selectedServices, setSelectedServices] = useState<Service[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [payment, setPayment] = useState(false);
-    const [paymentType, setPaymentType] = useState(null);
-    const [paymentSucess, setPaymentSucess] = useState(null);
-    const [pixData, setPixData] = useState({});
-    const [boletoData, setBoletoData] = useState({});
-    const [step, setStep] = useState(0);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [payment, setPayment] = useState<boolean>(false);
+    const [paymentType, setPaymentType] = useState<string | number | boolean | null>(null);
+    const [paymentSuccess, setPaymentSuccess] = useState<boolean | null>(null);
+    const [pixData, setPixData] = useState<PixData>({ qrecode: '', value: '' });
+    const [boletoData, setBoletoData] = useState<BoletoData>({ barcode: '', value: '' });
+    const [step, setStep] = useState<number>(0);
 
     const toggleServiceSelection = (service: Service) => {
         const isSelected = selectedServices.some((s) => s.id === service.id);
@@ -39,7 +49,7 @@ export default function ServicesPage() {
         setIsLoading(true);
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsLoading(false);
-        setPaymentSucess(true);
+        setPaymentSuccess(true);
     }
 
     const getPixData = async() => {
@@ -68,9 +78,9 @@ export default function ServicesPage() {
         setStep(0);
         setPaymentType(null);
         setPayment(false);
-        setPixData({});
-        setBoletoData({});
-        setPaymentSucess(null);
+        setPixData({ qrecode: '', value: '' });
+        setBoletoData({ barcode: '', value: '' });
+        setPaymentSuccess(null);
     }
 
     const handlePayment = () => {
@@ -90,7 +100,7 @@ export default function ServicesPage() {
 
     return (
         <div>
-            {paymentSucess == null && (
+            {paymentSuccess == null && (
                 <div>
                     {isLoading && (
                         <div className="h-screen w-full flex justify-center items-center flex-col p-6">
@@ -364,7 +374,7 @@ export default function ServicesPage() {
                     )}
                 </div>
             )}
-            {!isLoading && paymentSucess == true && (
+            {!isLoading && paymentSuccess == true && (
                 <div className="h-screen w-full flex justify-center items-center flex-col p-6 animation-check">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
                         <circle className="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
