@@ -27,6 +27,7 @@ import NumberInputMinus from "./img/AccommodationInfo/NumberInputMinus.svg";
 import NumberInputPlus from "./img/AccommodationInfo/NumberInputPlus.svg";
 import { FileInput } from "./components/FileInput";
 import TitleAndDescription from "./components/TitleAndDescription";
+import RegisterButton from "./components/RegisterButton";
 
 export default function PropertyRegister() {
   const [selectedDescription, setSelectedDescription] = useState<number | null>(
@@ -479,7 +480,7 @@ export default function PropertyRegister() {
           </div>
         </div>
         {/* area de adicionar fotos */}
-        <div className="h-auto w-full ">
+        <div className="h-96 w-full display">
           <div className={`mt-20 text-center`}>
             <p className="text-2xl mb-0 font-[Poppins]">Adicione até 4 fotos</p>
           </div>
@@ -493,9 +494,16 @@ export default function PropertyRegister() {
         </div>
 
         {/* area de titulo e descricão */}
-        <div className="flex justify-center align-center">
+        <div className="h-auto w-full mb-20 ">
           <TitleAndDescription />
         </div>
+
+        {/* botao de cadastrar */}
+
+        <div>
+          <RegisterButton/>
+        </div>
+
       </div>
     </div>
   );

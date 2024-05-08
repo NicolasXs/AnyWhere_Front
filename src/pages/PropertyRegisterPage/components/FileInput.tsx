@@ -56,7 +56,7 @@ const Input = ({ dropzone, files, removeFile }: InputProps & HasFileProps) => {
   return (
     <div
       {...getRootProps()}
-      className={`w-2/6 h-32 rounded-lg border-dashed border-4 hover:border-gray-500 bg-gray-200 hover:bg-gray-100 transition-all
+      className={`w-2/6 h-32 rounded-lg border-dashed border-4 hover:border-gray-500 bg-gray-100 hover:bg-gray-100 transition-all
       ${isDragActive ? 'border-blue-500' : 'border-gray-500'}`}
     >
       <label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
