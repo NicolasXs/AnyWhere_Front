@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function TitleAndDescription() {
   const [formData, setFormData] = useState({
@@ -7,13 +7,13 @@ export default function TitleAndDescription() {
     valor: "",
   });
 
-  const handleInputChange = (event: { target: { name: any; value: any; }; }) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (event: { target: { name: any; value: any; }; }) => {
+  //   const { name, value } = event.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  // };
 
   const handleTituloChange = (event: { target: { value: any; }; }) => {
     const inputValue = event.target.value;
