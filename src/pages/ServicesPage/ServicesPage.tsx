@@ -116,7 +116,7 @@ export default function ServicesPage() {
                     {!isLoading && (
                         <div>
                             {!payment && (
-                                <div className='container mx-auto p-6'>
+                                <div className='container mx-auto p-6 pb-20'>
                                     <div className="flex">
                                         <div className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
                                             {servicesData.services.map((service: Service) => (
