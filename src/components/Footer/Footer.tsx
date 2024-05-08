@@ -32,14 +32,14 @@ export default function Footer() {
         </ul>
       </div>
 
-      <div className="text-right md:w-1/4 mt-40 font-semibold font-[inter]">
+      <div className="text-right md:w-1/4 mt-40 font-medium font-[inter]">
         <button className="bg-azulLogo mb-5 text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-2 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out">
           Entre em Contato
         </button>
         <p>(99) 9999-9999</p>
         <p>exemplo@email.com</p>
       </div>
-      <div className="text-right justify-end md:w-full mt-48 mr-48 flex items-center">
+      <div className="text-right justify-end md:w-full mt-20 mr-48 flex items-center">
         <p className="font-medium font-[#464A5F] mr-4">
           © 2024 — Anywhere, Inc.{" "}
         </p>

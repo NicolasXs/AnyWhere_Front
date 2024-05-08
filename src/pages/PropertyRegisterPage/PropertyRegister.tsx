@@ -238,7 +238,6 @@ export default function PropertyRegister() {
             {[
               { img: Quarto, label: "Quarto" },
               { img: EspaçoInteiro, label: "Espaço Inteiro" },
-              { img: QuartoCompartilhado, label: "Quarto Compartilhado" },
             ].map((item, index) => (
               <button
                 key={index}
@@ -437,7 +436,7 @@ export default function PropertyRegister() {
           <div className="w-full flex-col justify-start">
             <div className={`mt-20 mb-10 text-center`}>
               <p className="text-2xl mb-10">
-                Quais das seguintes opções descrevem os serviços de seu espaço?
+                Quais serviços são oferecidos no seu espaço?
               </p>
               <div className="inline-grid grid-cols-4 justify-center items-center gap-8">
                 {[
