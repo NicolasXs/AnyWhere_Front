@@ -7,6 +7,8 @@ export default {
         customCiano: "#DAFAFC",
         customVermelho: "#FF3E30",
         customAzul: "#176BEF",
+        cinzaOpacidadeBaixa: "#636364",
+        azulLogo: "#176BEF"
       },
       fontSize: {
         sm: '0.8rem',
