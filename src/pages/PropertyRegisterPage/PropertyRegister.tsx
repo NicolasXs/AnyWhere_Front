@@ -11,7 +11,6 @@ import Hotel from "./img/LocalDescription/Hotel.svg";
 // imports espaço oferecido para visitantes abaixo
 import EspaçoInteiro from "./img/SpaceForGuests/EspaçoInteiro.svg";
 import Quarto from "./img/SpaceForGuests/Quarto.svg";
-import QuartoCompartilhado from "./img/SpaceForGuests/QuartoCompartilhado.svg";
 
 // imports de serviços oferecidos abaixo
 import ArCondicionado from "./img/OfferedServices/ArCondicionado.svg";
