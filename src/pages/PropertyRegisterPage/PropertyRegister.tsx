@@ -435,7 +435,7 @@ export default function PropertyRegister() {
           <div className="w-full flex-col justify-start">
             <div className={`mt-20 mb-10 text-center`}>
               <p className="text-2xl mb-10">
-                Quais serviços são oferecidos no seu espaço?
+                Quais comodidades são oferecidas no seu espaço?
               </p>
               <div className="inline-grid grid-cols-4 justify-center items-center gap-8">
                 {[
