@@ -6,7 +6,7 @@ import PaymentForm from "../pages/Checkout/PaymentForm";
 export function Router() {
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/cadastrar-propriedade" element={<PropertyRegister />} />
       <Route path="/payment" element={<PaymentForm />} />
     </Routes>
