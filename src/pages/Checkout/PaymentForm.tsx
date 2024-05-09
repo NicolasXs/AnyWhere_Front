@@ -76,7 +76,6 @@ export default function PaymentForm() {
                       </svg>
                     </div>
                     <input
-                      datepicker
                       datepicker-format="mm/yy"
                       id="card-expiration-input"
                       type="text"
