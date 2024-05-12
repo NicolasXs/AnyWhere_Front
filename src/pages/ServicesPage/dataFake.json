@@ -1,0 +1,60 @@
+{
+    "paymentMethods": [
+        {
+            "id": 1,
+            "name": "Pix",
+            "description": "Pague com Pix.",
+            "parcelas": 1
+        },
+        {
+            "id": 2,
+            "name": "Cartão de Crédito",
+            "description": "Pague com cartão de crédito.",
+            "parcelas": 12
+        },
+        {
+            "id": 3,
+            "name": "Boleto Bancário",
+            "description": "Pague com boleto bancário.",
+            "parcelas": 1
+        },
+        {
+            "id": 4,
+            "name": "Transferência Bancária",
+            "description": "Pague com transferência bancária.",
+            "parcelas": 1
+        }
+    ],
+    "services": [
+        {
+            "id": 1,
+            "name": "Serviço de Limpeza Diária",
+            "description": "Limpeza completa do quarto e banheiro diariamente.",
+            "value": 50.00
+        },
+        {
+            "id": 2,
+            "name": "Serviço de Lavanderia",
+            "description": "Lavagem e secagem de roupas.",
+            "value": 30.00
+        },
+        {
+            "id": 3,
+            "name": "Serviço de Café da Manhã",
+            "description": "Buffet de café da manhã completo.",
+            "value": 20.00
+        },
+        {
+            "id": 4,
+            "name": "Serviço de Transfer",
+            "description": "Transporte do aeroporto para o hotel.",
+            "value": 50.00
+        },
+        {
+            "id": 5,
+            "name": "Wi-Fi Premium",
+            "description": "Conexão de internet de alta velocidade.",
+            "value": 10.00
+        }
+    ]    
+}
