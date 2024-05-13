@@ -316,7 +316,7 @@ export default function PropertyRegister() {
                     onChange={(e) =>
                       setGuests(Math.max(1, parseInt(e.target.value)))
                     }
-                    className="w-20 text-center bg-white"
+                    className="w-20 text-center pr-0 bg-white border-none"
                   />
                   <button onClick={incrementGuests} className="ml-0">
                     <img
@@ -349,7 +349,7 @@ export default function PropertyRegister() {
                     onChange={(e) =>
                       setRooms(Math.max(1, parseInt(e.target.value)))
                     }
-                    className="w-20 text-center bg-white"
+                    className="w-20 text-center pr-0 bg-white border-none"
                   />
                   <button onClick={incrementRooms} className="ml-0">
                     <img
@@ -382,7 +382,7 @@ export default function PropertyRegister() {
                     onChange={(e) =>
                       setBeds(Math.max(1, parseInt(e.target.value)))
                     }
-                    className="w-20 text-center bg-white"
+                    className="w-20 text-center pr-0 bg-white border-none"
                   />
                   <button onClick={incrementBeds} className="ml-0">
                     <img
@@ -415,7 +415,7 @@ export default function PropertyRegister() {
                     onChange={(e) =>
                       setBathrooms(Math.max(1, parseInt(e.target.value)))
                     }
-                    className="w-20 text-center bg-white"
+                    className="w-20 text-center pr-0 bg-white border-none"
                   />
                   <button onClick={incrementBathrooms} className="ml-0">
                     <img
