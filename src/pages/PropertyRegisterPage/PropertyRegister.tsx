@@ -142,7 +142,7 @@ export default function PropertyRegister() {
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
       <div className="h-screen w-screen flex-col justify-start">
         <img
-          className={`w-32 ml-10 mt-10 ${
+          className={`w-44 ml-10 mt-10 ${
             window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
           } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${
             window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
