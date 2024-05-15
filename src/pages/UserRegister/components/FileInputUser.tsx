@@ -40,19 +40,6 @@ export const FileInputUser = () => {
 const Input = ({ dropzone, files, removeFile }: InputProps & HasFileProps) => {
   const { getRootProps, getInputProps, isDragActive } = dropzone;
 
-  // Função para dividir a matriz de arquivos em arrays de tamanho 2
-  const chunkArray = (array: any[], size: number) => {
-    const chunkedArray = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunkedArray.push(array.slice(i, i + size));
-    }
-    return chunkedArray;
-  };
-
-  // Dividir os arquivos em colunas de 2 itens cada
-  const columns = chunkArray(files, 3);
-
-
   return (
     <div
       {...getRootProps()}
