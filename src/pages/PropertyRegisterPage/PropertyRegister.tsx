@@ -357,7 +357,7 @@ export default function PropertyRegister() {
                       mask="999.999.999-999"
                       value={inscricaoEstadual}
                       onChange={(e) => setInscricaoEstadual(e.target.value)}
-                      placeholder="Inscrição Estadual"
+                      placeholder="XXX. XXX. XXX. XXX"
                       id="inscricaoEstadual"
                       className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
                     />
@@ -449,7 +449,7 @@ export default function PropertyRegister() {
                       mask="999.999.999-999"
                       value={inscricaoEstadual}
                       onChange={(e) => setInscricaoEstadual(e.target.value)}
-                      placeholder="Inscrição Estadual"
+                      placeholder="XXX. XXX. XXX. XXX"
                       id="inscricaoEstadual"
                       className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
                     />
