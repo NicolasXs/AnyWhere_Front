@@ -6,6 +6,7 @@ export default function UserRegister() {
   return (
     <div className="h-full w-full flex-col justify-start">
       <img
+        style={{ cursor: "pointer" }}
         className={`w-44 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
           } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
           }`}
@@ -69,7 +70,7 @@ export default function UserRegister() {
             />
           </form>
           <span className="text-black opacity-60 font-normal text-lg mt-5">
-            Certifique-se de que seja igual ao nome completo no seu documento de <br/> indentificação oficial.
+            Certifique-se de que seja igual ao nome completo no seu documento de <br /> indentificação oficial.
           </span>
         </div>
 
@@ -130,12 +131,12 @@ export default function UserRegister() {
           </label>
           <span>Aceitar <Link to="/termos-de-uso" className="text-azulLogo underline">Termos de uso</Link></span>
         </div>
-      
+
         <div className="flex justify-center">
-        <button className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out">
-          Concluir cadastro
-        </button>
-      </div>
+          <button className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out">
+            Concluir cadastro
+          </button>
+        </div>
 
       </div>
       <Footer />
