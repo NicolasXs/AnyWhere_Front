@@ -1,9 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const TermsOfUsePage: React.FC = () => {
-    const handleGoBack = () => {
-        window.history.back();
-    };
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
@@ -37,14 +35,13 @@ const TermsOfUsePage: React.FC = () => {
                     contato conosco.
                 </p>
             </div>
-            <div className="flex justify-center">
+            <Link to="/login" className="flex justify-center">
                 <button
-                    className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out"
-                    onClick={handleGoBack}
+                    className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-2 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out"
                 >
-                    Retornar à página anterior
+                    Retornar à página inicial
                 </button>
-            </div>
+            </Link>
         </div>
     );
 };
