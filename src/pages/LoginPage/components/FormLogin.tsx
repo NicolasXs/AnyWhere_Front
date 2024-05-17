@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import googleIcon from "./../img/GoogleLogo.svg";
 
 export default function FormLogin() {
@@ -50,9 +51,9 @@ export default function FormLogin() {
 
       <p className="mt-5 mb-10 text-center">
         Não tem uma conta?{" "}
-        <a href="#" className="text-blue-500">
+        <Link to="/registro" className="text-blue-500">
           Cadastre-se
-        </a>
+        </Link>
       </p>
     </div>
   );
