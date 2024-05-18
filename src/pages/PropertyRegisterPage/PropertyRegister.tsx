@@ -1,7 +1,7 @@
 import anywhereLogo from "../../assets/images/Anywhere.svg";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Footer from "../../components/Footer/Footer";
-
+import InputMask from "react-input-mask";
 // imports descrição do espaço abaixo
 import Apartamento from "./img/LocalDescription/Apartamento.svg";
 import Casa from "./img/LocalDescription/Casa.svg";
@@ -40,6 +40,12 @@ export default function PropertyRegister() {
   const [rooms, setRooms] = useState(1);
   const [beds, setBeds] = useState(1);
   const [bathrooms, setBathrooms] = useState(1);
+  const [cnpj, setCnpj] = useState("");
+  const [razaoSocial, setRazaoSocial] = useState("");
+  const [inscricaoEstadual, setInscricaoEstadual] = useState("");
+  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
   const handleDescriptionClick = (index: number) => {
     setSelectedDescription(index);
   };
@@ -138,56 +144,66 @@ export default function PropertyRegister() {
   // area das imagens
   // const onSubmit = () => {};
 
+
+  const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCpf(e.target.value);
+  };
+
+
+  const handleTelefoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTelefone(e.target.value);
+  };
+
+  const handleCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCnpj(e.target.value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
   return (
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
       <div className="h-screen w-screen flex-col justify-start">
         <img
-          className={`w-44 ml-10 mt-10 ${
-            window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
-          } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${
-            window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
-          }`}
+          className={`w-44 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
+            } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
+            }`}
           src={anywhereLogo}
           alt="logo"
         />
         <div className="flex justify-center items-center">
           <div className="flex flex-col items-center">
             <p
-              className={`text-3xl mt-0 w-xl ${
-                window.innerWidth <= 1366 && window.innerHeight < 1408
-                  ? "mb-0"
-                  : "md:mb-0"
-              } ${
-                window.innerWidth < 500 ? "text-2xl" : "text-base sm:text-3xl"
-              } text-customVermelho font-semibold text-center justify-center font-[inter] ${
-                window.innerWidth <= 1366 && window.innerHeight < 1408
+              className={`text-3xl mt-0 w-xl ${window.innerWidth <= 1366 && window.innerHeight < 1408
+                ? "mb-0"
+                : "md:mb-0"
+                } ${window.innerWidth < 500 ? "text-2xl" : "text-base sm:text-3xl"
+                } text-customVermelho font-semibold text-center justify-center font-[inter] ${window.innerWidth <= 1366 && window.innerHeight < 1408
                   ? "text-2xl"
                   : "text-base sm:text-3xl"
-              } ${
-                window.innerWidth <= 1366 && window.innerHeight < 1408
+                } ${window.innerWidth <= 1366 && window.innerHeight < 1408
                   ? "mt-0"
                   : "md:mt-0"
-              }`}
+                }`}
             >
               Vamos começar o seu cadastro!
             </p>
             <span
-              className={`${
-                window.innerWidth <= 1366 && window.innerHeight < 1408
-                  ? "text-lg"
-                  : "text-base sm:text-3xl"
-              } ${
-                window.innerWidth >= 2560 && window.innerWidth < 3440
+              className={`${window.innerWidth <= 1366 && window.innerHeight < 1408
+                ? "text-lg"
+                : "text-base sm:text-3xl"
+                } ${window.innerWidth >= 2560 && window.innerWidth < 3440
                   ? "block"
                   : "inline-block"
-              } ${
-                window.innerWidth < 1366 ? "" : "text-center "
-              } text-black opacity-60 font-normal justify-center`}
+                } ${window.innerWidth < 1366 ? "" : "text-center "
+                } text-black opacity-60 font-normal justify-center`}
             >
               Preencha corretamente os campos abaixo.
             </span>
           </div>
         </div>
+
         {/* descrição do espaço abaixo */}
         <div className={`mt-20 text-center`}>
           <p className="text-2xl mb-10 font-[Poppins]">
@@ -202,11 +218,10 @@ export default function PropertyRegister() {
             ].map((item, index) => (
               <button
                 key={index}
-                className={`flex flex-col items-center justify-center w-48 font-[inter] bg-white border border-solid border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
-                  selectedDescription === index
-                    ? "border-red-300 border-2 font-semibold	"
-                    : ""
-                }`}
+                className={`flex flex-col items-center justify-center w-48 font-[inter] bg-white border border-solid border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${selectedDescription === index
+                  ? "border-red-300 border-2 font-semibold "
+                  : ""
+                  }`}
                 type="button"
                 onClick={() => handleDescriptionClick(index)}
               >
@@ -216,17 +231,280 @@ export default function PropertyRegister() {
                   className="w-17 h-16 mb-2"
                 />
                 <span
-                  className={`${
-                    selectedDescription === index
-                      ? "text-red-500"
-                      : "text-black"
-                  }`}
+                  className={`${selectedDescription === index ? "text-red-500" : "text-black"
+                    }`}
                 >
                   {item.label}
                 </span>
               </button>
             ))}
           </div>
+          {selectedDescription === 0 && (
+  <div className="mt-4">
+    <p className="text-lg text-center font-[poppins]">Precisamos que preencha algumas informações</p>
+    <div className="mt-4 text-center flex justify-center items-center h-full">
+      <div className="flex flex-col w-1/6">
+        <div className="flex flex-col mb-4">
+          <label htmlFor="cpf" className="block text-lg font-medium text-gray-600">CPF</label>
+          <InputMask
+            mask="999.999.999-99"
+            value={cpf}
+            onChange={handleCpfChange}
+            placeholder="CPF"
+            id="cpf"
+            className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+          />
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="telefone" className="block text-lg font-medium text-gray-600">Telefone</label>
+          <InputMask
+            mask="(99) 99999-9999"
+            value={telefone}
+            onChange={handleTelefoneChange}
+            placeholder="Telefone"
+            id="telefone"
+            className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="dataNascimento" className="block text-lg font-medium text-gray-600">Data de Nascimento</label>
+          <input
+            type="date"
+            placeholder="Data de Nascimento"
+            id="dataNascimento"
+            className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{selectedDescription === 1 && (
+  <div className="mt-4">
+    <p className="text-lg text-center font-[poppins]">Precisamos que preencha algumas informações</p>
+    <div className="mt-4 text-center flex justify-center items-center h-full">
+      <div className="flex flex-col w-1/6">
+        <div className="flex flex-col mb-4">
+          <label htmlFor="cpf" className="block text-lg font-medium text-gray-600">CPF</label>
+          <InputMask
+            mask="999.999.999-99"
+            value={cpf}
+            onChange={handleCpfChange}
+            placeholder="CPF"
+            id="cpf"
+            className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+          />
+        </div>
+        <div className="flex flex-col mb-4">
+          <label htmlFor="telefone" className="block text-lg font-medium text-gray-600">Telefone</label>
+          <InputMask
+            mask="(99) 99999-9999"
+            value={telefone}
+            onChange={handleTelefoneChange}
+            placeholder="Telefone"
+            id="telefone"
+            className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="dataNascimento" className="block text-lg font-medium text-gray-600">Data de Nascimento</label>
+          <input
+            type="date"
+            placeholder="Data de Nascimento"
+            id="dataNascimento"
+            className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+          {selectedDescription === 2 && (
+            <div className="mt-4">
+              <p className="text-lg text-center font-[poppins]">Precisamos que preencha algumas informações</p>
+              <div className="mt-4 text-center flex justify-center items-center w-full h-full">
+                <div className="grid grid-cols-2 gap-4 w-1/2">
+                  <div className="flex flex-col">
+                    <label htmlFor="cnpj" className="block text-lg font-medium text-gray-600">CNPJ</label>
+                    <InputMask
+                      required
+                      mask="99.999.999/9999-99"
+                      value={cnpj}
+                      onChange={handleCnpjChange}
+                      placeholder="XX. XXX. XXX/0001-XX"
+                      id="cnpj"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="razaoSocial" className="block text-lg font-medium text-gray-600">Razão Social</label>
+                    <input
+                      type="text"
+                      value={razaoSocial}
+                      onChange={(e) => setRazaoSocial(e.target.value)}
+                      placeholder="Ex: Louças Brasil LTDA"
+                      id="razaoSocial"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                      maxLength={100}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="inscricaoEstadual" className="block text-lg font-medium text-gray-600">Inscrição Estadual</label>
+                    <InputMask
+                      mask="999.999.999-999"
+                      value={inscricaoEstadual}
+                      onChange={(e) => setInscricaoEstadual(e.target.value)}
+                      placeholder="XXX. XXX. XXX. XXX"
+                      id="inscricaoEstadual"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="email" className="block text-lg font-medium text-gray-600">E-mail</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="E-mail"
+                      id="email"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="telefone" className="block text-lg font-medium text-gray-600">Telefone</label>
+                    <InputMask
+                      mask="(99) 99999-9999"
+                      value={telefone}
+                      onChange={handleTelefoneChange}
+                      placeholder="Telefone"
+                      id="telefone"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="cnae" className="block text-lg font-medium text-gray-600">CNAE</label>
+                    <select id="cnae" className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4" required>
+                      <option value="" disabled selected>Selecione o CNAE</option>
+                      <>
+                        <option value="7020-4/00">Consultoria administrativa</option>
+                        <option value="6911-7/01">Consultoria jurídica</option>
+                        <option value="5611-2/02">Bares e outros estabelecimentos especializados em servir bebidas</option>
+                        <option value="5611-2/05">Bares e outros estabelecimentos especializados em servir bebidas, com entretenimento</option>
+                      </>
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="dataFundacao" className="block text-lg font-medium text-gray-600">Data de Fundação</label>
+                    <input
+                      type="date"
+                      id="dataFundacao"
+                      placeholder="Data de Fundação"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedDescription === 3 && (
+            <div className="mt-4">
+              <p className="text-lg text-center font-[poppins]">Precisamos que preencha algumas informações</p>
+              <div className="mt-4 text-center flex justify-center items-center w-full h-full">
+                <div className="grid grid-cols-2 gap-4 w-1/2">
+                  <div className="flex flex-col">
+                    <label htmlFor="cnpj" className="block text-lg font-medium text-gray-600">CNPJ</label>
+                    <InputMask
+                      required
+                      mask="99.999.999/9999-99"
+                      value={cnpj}
+                      onChange={handleCnpjChange}
+                      placeholder="XX. XXX. XXX/0001-XX"
+                      id="cnpj"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="razaoSocial" className="block text-lg font-medium text-gray-600">Razão Social</label>
+                    <input
+                      type="text"
+                      value={razaoSocial}
+                      onChange={(e) => setRazaoSocial(e.target.value)}
+                      placeholder="Ex: Louças Brasil LTDA"
+                      id="razaoSocial"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                      maxLength={100}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="inscricaoEstadual" className="block text-lg font-medium text-gray-600">Inscrição Estadual</label>
+                    <InputMask
+                      mask="999.999.999-999"
+                      value={inscricaoEstadual}
+                      onChange={(e) => setInscricaoEstadual(e.target.value)}
+                      placeholder="XXX. XXX. XXX. XXX"
+                      id="inscricaoEstadual"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="email" className="block text-lg font-medium text-gray-600">E-mail</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="E-mail"
+                      id="email"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="telefone" className="block text-lg font-medium text-gray-600">Telefone</label>
+                    <InputMask
+                      mask="(99) 99999-9999"
+                      value={telefone}
+                      onChange={handleTelefoneChange}
+                      placeholder="Telefone"
+                      id="telefone"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="cnae" className="block text-lg font-medium text-gray-600">CNAE</label>
+                    <select id="cnae" className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4" required>
+                      <option value="" disabled selected>Selecione o CNAE</option>
+                      <>
+                        <option value="7020-4/00">Consultoria administrativa</option>
+                        <option value="6911-7/01">Consultoria jurídica</option>
+                        <option value="5611-2/02">Bares e outros estabelecimentos especializados em servir bebidas</option>
+                        <option value="5611-2/05">Bares e outros estabelecimentos especializados em servir bebidas, com entretenimento</option>
+                      </>
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="dataFundacao" className="block text-lg font-medium text-gray-600">Data de Fundação</label>
+                    <input
+                      type="date"
+                      id="dataFundacao"
+                      placeholder="Data de Fundação"
+                      className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
         {/* tipo de espaço oferecido para visitantes abaixo */}
         <div className={`mt-20 text-center`}>
@@ -240,11 +518,10 @@ export default function PropertyRegister() {
             ].map((item, index) => (
               <button
                 key={index}
-                className={`flex flex-col items-center justify-center w-60 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
-                  selectedSpace === index
-                    ? "border-red-300 border-2 font-semibold	"
-                    : ""
-                }`}
+                className={`flex flex-col items-center justify-center w-60 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${selectedSpace === index
+                  ? "border-red-300 border-2 font-semibold	"
+                  : ""
+                  }`}
                 type="button"
                 onClick={() => handleSpaceClick(index)}
               >
@@ -254,9 +531,8 @@ export default function PropertyRegister() {
                   className="w-17 h-16 mb-2"
                 />
                 <span
-                  className={`${
-                    selectedSpace === index ? "text-red-500" : "text-black"
-                  }`}
+                  className={`${selectedSpace === index ? "text-red-500" : "text-black"
+                    }`}
                 >
                   {item.label}
                 </span>
@@ -450,11 +726,10 @@ export default function PropertyRegister() {
                 ].map((item, index) => (
                   <button
                     key={index}
-                    className={`flex flex-col items-center justify-center w-52 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${
-                      selectedServices.includes(index)
-                        ? "border-red-300 border-2 font-semibold	"
-                        : ""
-                    }`}
+                    className={`flex flex-col items-center justify-center w-52 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${selectedServices.includes(index)
+                      ? "border-red-300 border-2 font-semibold	"
+                      : ""
+                      }`}
                     type="button"
                     onClick={() => handleServiceClick(index)}
                   >
@@ -464,11 +739,10 @@ export default function PropertyRegister() {
                       className="w-17 h-16 mb-2"
                     />
                     <span
-                      className={`${
-                        selectedServices.includes(index)
-                          ? "text-red-500"
-                          : "text-black"
-                      }`}
+                      className={`${selectedServices.includes(index)
+                        ? "text-red-500"
+                        : "text-black"
+                        }`}
                     >
                       {item.label}
                     </span>
