@@ -1,7 +1,7 @@
 import { propertyRegister } from "../../../config/config";
 
 export default function RegisterButton() {
-  const handleClick = () => {
+  const handleClick = async () => {
     try {
       // Coletar dados do localStorage
       const accommodationType = localStorage.getItem("accommodation_type") || "";
@@ -25,7 +25,7 @@ export default function RegisterButton() {
       const dataNascimento = localStorage.getItem("date_of_birth") || "";
       const title = localStorage.getItem("formData") ? JSON.parse(localStorage.getItem("formData") || "{}").title || "" : "";
       const description = localStorage.getItem("formData") ? JSON.parse(localStorage.getItem("formData") || "{}").description || "" : "";
-
+  
       // Construir o objeto para enviar para a API
       const requestBody = {
         accommodation_type: accommodationType,
@@ -50,26 +50,22 @@ export default function RegisterButton() {
         title: title,
         description: description
       };
-      console.log(requestBody)
-
+      console.log(requestBody);
+  
       // Enviar os dados para a API
-      propertyRegister(requestBody)
-        .then(response => {
-          if (response.status === 201) {
-            console.log("Dados enviados com sucesso para a API.");
-            // Limpar os dados do localStorage após o envio bem-sucedido, se necessário
-            // localStorage.clear();
-          } else {
-            console.error("Erro ao enviar dados para a API:", response.status);
-          }
-        })
-        .catch(error => {
-          console.error("Erro ao enviar dados para a API:", error);
-        });
+      const response = await propertyRegister(requestBody);
+      if (response.status === 201) {
+        console.log("Dados enviados com sucesso para a API.");
+        // Limpar os dados do localStorage após o envio bem-sucedido, se necessário
+        // localStorage.clear();
+      } else {
+        console.error("Erro ao enviar dados para a API:", response.status);
+      }
     } catch (error) {
       console.error("Erro ao processar dados do localStorage:", error);
     }
   };
+  
 
   return (
     <div className="flex justify-center">
