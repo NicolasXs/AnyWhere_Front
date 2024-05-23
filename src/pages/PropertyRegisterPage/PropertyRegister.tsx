@@ -10,7 +10,7 @@ import AccommodationInfo from "./components/AccommodationInfo";
 import { FileInput } from "./components/FileInput";
 import TitleAndDescription from "./components/TitleAndDescription";
 import RegisterButton from "./components/RegisterButton";
-import SpaceDescription2 from "./components/spaceDescription2";
+// import SpaceDescription2 from "./components/spaceDescription2";
 
 export default function PropertyRegister() {
   // área de dados enviados abaixo

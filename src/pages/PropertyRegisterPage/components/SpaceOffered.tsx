@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Quarto from "../img/SpaceForGuests/Quarto.svg"; // Import your images
 import EspaçoInteiro from ".././img/SpaceForGuests/EspaçoInteiro.svg"; // Import your images
 
 export default function SpaceOffered() {
     const [selectedSpace, setSelectedSpace] = useState<number | null>(null);
+    const [selectedSpaceValue, setSelectedSpaceValue] = useState("");
 
-    const handleSpaceClick = (index: number) => {
+    // Load selection from localStorage on component mount
+    useEffect(() => {
+        const savedSpace = localStorage.getItem("selectedSpace");
+        const savedSpaceValue = localStorage.getItem("selectedSpaceValue");
+        if (savedSpace !== null && savedSpaceValue !== null) {
+            setSelectedSpace(Number(savedSpace));
+            setSelectedSpaceValue(savedSpaceValue);
+        }
+    }, []);
+
+    // Handle button click and save selection to localStorage
+    const handleSpaceClick = (index: number, label: string) => {
         setSelectedSpace(index);
+        setSelectedSpaceValue(label);
+        localStorage.setItem("accommodation_type", index.toString());
+        localStorage.setItem("accommodation_type", label);
     };
 
     return (
@@ -26,7 +41,7 @@ export default function SpaceOffered() {
                             : ""
                             }`}
                         type="button"
-                        onClick={() => handleSpaceClick(index)}
+                        onClick={() => handleSpaceClick(index, item.label)}
                     >
                         <img
                             src={item.img}
@@ -42,6 +57,7 @@ export default function SpaceOffered() {
                     </button>
                 ))}
             </div>
+            <input type="hidden" name="spaceOffered" value={selectedSpaceValue} />
         </div>
     );
 }

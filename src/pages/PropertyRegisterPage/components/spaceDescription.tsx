@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputMask from "react-input-mask";
 import Apartamento from ".././img/LocalDescription/Apartamento.svg";
 import Casa from ".././img/LocalDescription/Casa.svg";
@@ -9,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -26,7 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   cpf: z.string({ invalid_type_error: "Please enter a valid CPF." }),
@@ -43,13 +41,26 @@ const FormSchema = z.object({
 });
 
 export default function SpaceDescription() {
-  const [selectedDescription, setSelectedDescription] = useState<number | null>(
-    null
-  );
+  const [selectedDescription, setSelectedDescription] = useState<number | null>(null);
   const [selectDescriptionValue, setSelectDescriptionValue] = useState("");
+
+  useEffect(() => {
+    const savedDescription = localStorage.getItem("selectedDescription");
+    const savedDescriptionValue = localStorage.getItem("selectDescriptionValue");
+
+    if (savedDescription !== null) {
+      setSelectedDescription(Number(savedDescription));
+    }
+    if (savedDescriptionValue !== null) {
+      setSelectDescriptionValue(savedDescriptionValue);
+    }
+  }, []);
+
   const handleDescriptionClick = (index: number, item: string) => {
     setSelectedDescription(index);
     setSelectDescriptionValue(item);
+    localStorage.setItem("selectedDescription", index.toString());
+    localStorage.setItem("selectDescriptionValue", item);
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -67,15 +78,17 @@ export default function SpaceDescription() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  function handleBlur() {
+    const data = form.getValues();
+    localStorage.setItem("cpf", data.cpf);
+    localStorage.setItem("cnpj", data.cnpj);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("phone", data.telefone);
+    localStorage.setItem("social_reason", data.razaoSocial);
+    localStorage.setItem("state_registration", data.inscricaoEstadual);
+    localStorage.setItem("date_of_birth", data.dataNascimento);
+    localStorage.setItem("date_of_foundation", data.dataFundacao);
+    localStorage.setItem("cnae", data.cnae);
   }
 
   return (
@@ -122,7 +135,7 @@ export default function SpaceDescription() {
           Precisamos que preencha algumas informações
         </p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="">
+          <form className="">
             <div className="mt-4 text-center flex justify-center items-center w-full h-full flex-col">
               <div
                 className={`flex flex-col w-1/6 ${
@@ -144,6 +157,7 @@ export default function SpaceDescription() {
                           mask="999.999.999-99"
                           placeholder="CPF"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md w-full"
                         />
                       </FormControl>
@@ -164,6 +178,7 @@ export default function SpaceDescription() {
                           mask="(99) 99999-9999"
                           placeholder="Telefone"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md w-full"
                         />
                       </FormControl>
@@ -184,6 +199,7 @@ export default function SpaceDescription() {
                           type="date"
                           placeholder="Data de Nascimento"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md w-full"
                         />
                       </FormControl>
@@ -213,6 +229,7 @@ export default function SpaceDescription() {
                           mask="99.999.999/9999-99"
                           placeholder="XX. XXX. XXX/0001-XX"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4 w-full"
                         />
                       </FormControl>
@@ -232,6 +249,7 @@ export default function SpaceDescription() {
                         <Input
                           placeholder="Ex: Louças Brasil LTDA"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4 w-full"
                         />
                       </FormControl>
@@ -252,6 +270,7 @@ export default function SpaceDescription() {
                           mask="999.999.999-999"
                           placeholder="XXX. XXX. XXX. XXX"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4 w-full"
                         />
                       </FormControl>
@@ -271,6 +290,7 @@ export default function SpaceDescription() {
                         <Input
                           placeholder="email"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md mb-4 w-full"
                         />
                       </FormControl>
@@ -291,6 +311,7 @@ export default function SpaceDescription() {
                           mask="(99) 99999-9999"
                           placeholder="Telefone"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md w-full"
                         />
                       </FormControl>
@@ -309,7 +330,10 @@ export default function SpaceDescription() {
                       <FormControl>
                         <Select
                           value={field.value}
-                          onValueChange={field.onChange}
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                            handleBlur();
+                          }}
                         >
                           <SelectTrigger className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md w-full">
                             <SelectValue placeholder="Selecione o CNAE" />
@@ -349,6 +373,7 @@ export default function SpaceDescription() {
                           type="date"
                           placeholder="Data de Fundação"
                           {...field}
+                          onBlur={handleBlur}
                           className="h-12 text-lg text-center border border-solid border-gray-300 rounded-xl py-2 focus:outline-none shadow-md w-full"
                         />
                       </FormControl>
@@ -357,8 +382,6 @@ export default function SpaceDescription() {
                   )}
                 />
               </div>
-
-              <Button type="submit">Submit</Button>
             </div>
           </form>
         </Form>

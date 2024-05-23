@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ArCondicionado from "../img/OfferedServices/ArCondicionado.svg";
 import Churrasqueira from "../img/OfferedServices/Churrasqueira.svg";
@@ -9,18 +9,38 @@ import Piscina from "../img/OfferedServices/Piscina.svg";
 import TV from "../img/OfferedServices/TV.svg";
 import Wifi from "../img/OfferedServices/Wifi.svg";
 
-export default function AmenitiesOffered() {
-    const [selectedServices, setSelectedServices] = useState<number[]>([]);
+const services = [
+    { img: Wifi, label: "wifi" },
+    { img: TV, label: "tv" },
+    { img: Piscina, label: "piscina" },
+    { img: MaquinaDeLavar, label: "máquina de lavar" },
+    { img: Estacionamento, label: "estacionamento" },
+    { img: Cozinha, label: "cozinha" },
+    { img: Churrasqueira, label: "churrasqueira" },
+    { img: ArCondicionado, label: "ar condicionado" },
+];
 
-    const handleServiceClick = (index: number) => {
-        const selectedIndex = selectedServices.indexOf(index);
-        if (selectedIndex === -1) {
-            setSelectedServices([...selectedServices, index]);
-        } else {
-            const updatedServices = [...selectedServices];
-            updatedServices.splice(selectedIndex, 1);
-            setSelectedServices(updatedServices);
+export default function AmenitiesOffered() {
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
+
+    // Load selected services from localStorage on mount
+    useEffect(() => {
+        const savedServices = localStorage.getItem("conveniences");
+        if (savedServices) {
+            setSelectedServices(JSON.parse(savedServices));
         }
+    }, []);
+
+    const handleServiceClick = (label: string) => {
+        const selectedIndex = selectedServices.indexOf(label);
+        let updatedServices;
+        if (selectedIndex === -1) {
+            updatedServices = [...selectedServices, label];
+        } else {
+            updatedServices = selectedServices.filter(service => service !== label);
+        }
+        setSelectedServices(updatedServices);
+        localStorage.setItem("conveniences", JSON.stringify(updatedServices));
     };
 
     return (
@@ -31,24 +51,15 @@ export default function AmenitiesOffered() {
                         Quais comodidades são oferecidas no seu espaço?
                     </p>
                     <div className="inline-grid grid-cols-4 justify-center items-center gap-8">
-                        {[
-                            { img: Wifi, label: "Wifi" },
-                            { img: TV, label: "TV" },
-                            { img: Piscina, label: "Piscina" },
-                            { img: MaquinaDeLavar, label: "Máquina de Lavar" },
-                            { img: Estacionamento, label: "Estacionamento" },
-                            { img: Cozinha, label: "Cozinha" },
-                            { img: Churrasqueira, label: "Churrasqueira" },
-                            { img: ArCondicionado, label: "Ar Condicionado" },
-                        ].map((item, index) => (
+                        {services.map((item, index) => (
                             <button
                                 key={index}
-                                className={`flex flex-col items-center justify-center w-52 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${selectedServices.includes(index)
+                                className={`flex flex-col items-center justify-center w-52 bg-white border border-solid font-[inter] border-gray-300 rounded-lg p-6 transition duration-300 ease-in-out hover:border-opacity-25 hover:border-red-500 hover:transform hover:scale-110 ${selectedServices.includes(item.label)
                                     ? "border-red-300 border-2 font-semibold"
                                     : ""
                                     }`}
                                 type="button"
-                                onClick={() => handleServiceClick(index)}
+                                onClick={() => handleServiceClick(item.label)}
                             >
                                 <img
                                     src={item.img}
@@ -56,7 +67,7 @@ export default function AmenitiesOffered() {
                                     className="w-17 h-16 mb-2"
                                 />
                                 <span
-                                    className={`${selectedServices.includes(index)
+                                    className={`${selectedServices.includes(item.label)
                                         ? "text-red-500"
                                         : "text-black"
                                         }`}
