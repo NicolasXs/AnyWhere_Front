@@ -6,9 +6,7 @@ const API = axios.create({
 
 export const propertyRegister = async (requestBody: any) => {
     try {
-        console.log("Request Body:", requestBody); 
         const response = await API.post('/accommodation', requestBody);
-        console.log("Response Data:", response.data); 
         return response.data; 
     } catch (error) {
         console.error("Error:", error); 

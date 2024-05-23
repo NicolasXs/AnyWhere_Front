@@ -17,7 +17,6 @@ export default function PropertyRegister() {
 
   // const handleSubmit = () => {
   //   // Aqui você pode enviar os dados para onde desejar
-  //   console.log("Dados enviados:", {
   //     selectedDescription,
   //     selectedSpace,
   //     address,

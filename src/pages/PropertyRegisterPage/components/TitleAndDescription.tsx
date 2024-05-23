@@ -4,7 +4,7 @@ export default function TitleAndDescription() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    valor: "",
+    value: "",
   });
 
   // Carregar dados do localStorage quando o componente é montado
@@ -52,7 +52,7 @@ export default function TitleAndDescription() {
       style: "currency",
       currency: "BRL",
     }).format(sanitizedValue / 100);
-    setFormData({ ...formData, valor: formattedValue });
+    setFormData({ ...formData, value: formattedValue });
   };
 
   const caracteresRestantesTitulo = 56 - formData.title.length;
@@ -116,7 +116,7 @@ export default function TitleAndDescription() {
           <input
             placeholder="R$ Gratuito"
             type="text"
-            value={formData.valor}
+            value={formData.value}
             onChange={handleValorChange}
             name="valor"
             id="valor"
