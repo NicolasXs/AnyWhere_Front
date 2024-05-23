@@ -1,14 +1,15 @@
-const API = "https://any-where-back.vercel.app/";
+import axios from "axios";
 
-// export const propertyRegister = async () => {
-//     const bodyForm = JSON.stringify();
-//     const config = {
-//         method: "POST",
-//         headers: {
-//           "content-type": "application/json",
-//         },
-//         body: bodyForm,
-//       };
-//   return await fetch(`${API}/property`, config);
+const API = axios.create({
+    baseURL: "https://any-where-back.vercel.app",
+});
 
-// }
+export const propertyRegister = async (requestBody: any) => {
+    try {
+        const response = await API.post('/accommodation', requestBody);
+        return response.data; 
+    } catch (error) {
+        console.error("Error:", error); 
+        throw error;
+    }
+};

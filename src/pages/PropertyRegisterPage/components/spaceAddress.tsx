@@ -1,15 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const FormSchema = z.object({
+    address: z.string().nonempty({ message: "Endereço é obrigatório" }),
+    reference: z.string(), // Removendo a validação de obrigatoriedade para a referência
+});
 
 export default function SpaceAddress() {
-    const [address, setAddress] = useState("");
-    const [reference, setReference] = useState("");
+    const [initialValues, setInitialValues] = useState({
+        address: "",
+        reference: "",
+    });
 
-    const handleReferenceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setReference(e.target.value);
-    };
+    useEffect(() => {
+        const savedAddress = localStorage.getItem("address");
+        const savedReference = localStorage.getItem("reference");
 
-    const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAddress(e.target.value);
+        if (savedAddress && savedReference) {
+            setInitialValues({
+                address: savedAddress,
+                reference: savedReference,
+            });
+        }
+    }, []);
+
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+        resolver: zodResolver(FormSchema),
+        defaultValues: initialValues,
+    });
+
+    useEffect(() => {
+        setValue("address", initialValues.address);
+        setValue("reference", initialValues.reference);
+    }, [initialValues, setValue]);
+
+    const onSubmit = (data: { address: string; reference: string; }) => {
+        localStorage.setItem("address", data.address);
+        localStorage.setItem("reference_address", data.reference);
     };
 
     return (
@@ -17,26 +46,27 @@ export default function SpaceAddress() {
             <p className="text-2xl mb-5 font-[Poppins]">
                 Onde fica a sua acomodação?
             </p>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <input
                     className="w-3/5 h-20 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
                     type="text"
                     placeholder="Insira o endereço - Ex: Rua, número, bairro, cidade, UF."
-                    value={address}
-                    onChange={handleAddressChange}
+                    {...register("address")}
+                    onBlur={handleSubmit(onSubmit)}
                 />
-            </form>
-            <div className="mt-10 text-center">
-                <form>
+                {errors.address && <p className="text-red-500">{errors.address.message}</p>}
+                <div className="mt-10 text-center">
                     <input
                         className="w-3/5 h-20 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 mb-20 py-2 focus:outline-none shadow-md"
                         type="text"
                         placeholder="Insira a referência"
-                        value={reference}
-                        onChange={handleReferenceChange}
+                        {...register("reference")}
+                        onBlur={handleSubmit(onSubmit)}
                     />
-                </form>
-            </div>
+                    {errors.reference && <p className="text-red-500">{errors.reference.message}</p>}
+                </div>
+                <button type="submit" className="hidden">Submit</button>
+            </form>
         </div>
     );
 }
