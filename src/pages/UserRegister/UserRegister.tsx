@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
 import anywhereLogo from "../../assets/images/Anywhere.svg";
 import Footer from "../../components/Footer/Footer";
@@ -29,35 +28,100 @@ export default function UserRegister() {
 
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setSuccessMessage("");
-    }, 3000); 
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [successMessage]);
 
+  const validatePhone = (phone: string) => {
+    const phonePattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+    return phonePattern.test(phone);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const formattedPhone = value.replace(/\D/g, "");
-
     setFormData({
       ...formData,
-      [name]: name === "phone" ? formattedPhone : value,
+      [name]: value,
     });
+
+    if (name === "password") {
+      const strength = calculatePasswordStrength(value);
+      setPasswordStrength(strength);
+      if (value.length < 8) {
+        setErrors({ ...errors, password: "A senha deve ter pelo menos 8 caracteres" });
+      } else {
+        setErrors({ ...errors, password: "" });
+      }
+    }
+  };
+
+  const calculatePasswordStrength = (password: string) => {
+    let strength = 0;
+    if (password.length >= 8) strength += 25;
+    if (password.match(/[a-z]/)) strength += 15;
+    if (password.match(/[A-Z]/)) strength += 20;
+    if (password.match(/[0-9]/)) strength += 20;
+    if (password.match(/[^a-zA-Z0-9]/)) strength += 20;
+    return strength;
+  };
+
+  const getPasswordStrengthLabel = (strength: number) => {
+    if (strength === 0) return "";
+    if (strength < 25) return "Muito Fraca";
+    if (strength < 50) return "Fraca";
+    if (strength < 75) return "Boa";
+    if (strength < 100) return "Muito Boa";
+    return "Excelente!";
+  };
+
+  const getPasswordStrengthColor = (strength: number) => {
+    if (strength < 50) return "bg-red-500";
+    if (strength < 75) return "bg-orange-500";
+    return "bg-green-500";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let formIsValid = true;
+    let newErrors = { ...errors };
+
+    if (!validatePhone(formData.phone)) {
+      newErrors.phone = "Número de telefone inválido";
+      formIsValid = false;
+    } else {
+      newErrors.phone = "";
+    }
+
+    if (formData.password.length < 8) {
+      newErrors.password = "A senha deve ter pelo menos 8 caracteres";
+      formIsValid = false;
+    } else {
+      newErrors.password = "";
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      setErrors({ ...errors, confirmPassword: "As senhas precisam ser iguais" });
+      newErrors.confirmPassword = "As senhas precisam ser iguais";
+      formIsValid = false;
+    } else {
+      newErrors.confirmPassword = "";
+    }
+
+    setErrors(newErrors);
+
+    if (!formIsValid) {
       return;
     }
 
     setLoading(true);
 
-    const { password, confirmPassword, phone, ...requestBody } = formData;
+    const { confirmPassword, phone, ...requestBody } = formData;
     try {
       const response = await createUser({
         ...requestBody,
@@ -74,6 +138,7 @@ export default function UserRegister() {
         password: "",
         confirmPassword: "",
       });
+      setPasswordStrength(0);
     } catch (error: any) {
       console.error("Failed to create user:", error);
       if (error.response && error.response.data && error.response.data.message) {
@@ -85,6 +150,7 @@ export default function UserRegister() {
       setLoading(false);
     }
   };
+
   return (
     <div className="h-full w-full flex-col justify-start">
       <img
@@ -180,7 +246,7 @@ export default function UserRegister() {
         <div className="flex justify-center items-start mt-10">
           <div className="w-full md:w-4/6 flex justify-evenly">
             <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
-              <p className="text-2xl mb-5 font-[Poppins]">Senha</p>
+              <p className="text-2xl mb-2 font-[Poppins]">Senha</p>
               <input
                 name="password"
                 value={formData.password}
@@ -191,6 +257,17 @@ export default function UserRegister() {
                 required
               />
               {errors.password && <div className="text-red-500">{errors.password}</div>}
+              <div className="w-full mt-2">
+                <p className="text-base font-[Poppins] mb-1 text-left">Força da Senha:</p>
+                <div className="flex items-center">
+                  <div className="w-2/4 bg-gray-200 rounded-full h-2.5">
+                    <div className={`h-2.5 rounded-full ${getPasswordStrengthColor(passwordStrength)}`} style={{ width: `${passwordStrength}%` }}></div>
+                  </div>
+                  <span className="ml-2 text-sm font-[Poppins]">
+                    {getPasswordStrengthLabel(passwordStrength)}
+                  </span>
+                </div>
+              </div>
             </div>
             <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
               <p className="text-2xl mb-5 font-[Poppins]">Repita a senha</p>
@@ -209,12 +286,12 @@ export default function UserRegister() {
         </div>
 
         {successMessage && (
-          <div className="text-green-800 font-[Poppins] text-lg text-center mt-4">{successMessage}</div>
+          <div className="text-green-500 font-[Poppins] font-medium text-lg text-center mt-4">{successMessage}</div>
         )}
 
         <div className="flex justify-center mt-10">
           <button
-            className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out"
+            className={`w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md transform transition duration-300 ease-in-out ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}
             type="submit"
             disabled={loading}
           >
