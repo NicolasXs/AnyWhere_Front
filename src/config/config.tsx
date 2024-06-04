@@ -13,3 +13,13 @@ export const propertyRegister = async (requestBody: any) => {
         throw error;
     }
 };
+
+export const createUser = async (requestBody: any) => {
+    try {
+        const response = await API.post('/users', requestBody);
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        throw error;
+    }
+};

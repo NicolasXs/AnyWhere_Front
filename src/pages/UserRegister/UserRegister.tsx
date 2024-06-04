@@ -1,145 +1,305 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import InputMask from "react-input-mask";
 import anywhereLogo from "../../assets/images/Anywhere.svg";
 import Footer from "../../components/Footer/Footer";
-import { FileInputUser } from "./components/FileInputUser";
+import { createUser } from '../../config/config';
+
 export default function UserRegister() {
+  const [formData, setFormData] = useState({
+    name: "",
+    lastname: "",
+    birthdate: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    lastname: "",
+    birthdate: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    form: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [successMessage]);
+
+  const validatePhone = (phone: string) => {
+    const phonePattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+    return phonePattern.test(phone);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (name === "password") {
+      const strength = calculatePasswordStrength(value);
+      setPasswordStrength(strength);
+      if (value.length < 8) {
+        setErrors({ ...errors, password: "A senha deve ter pelo menos 8 caracteres" });
+      } else {
+        setErrors({ ...errors, password: "" });
+      }
+    }
+  };
+
+  const calculatePasswordStrength = (password: string) => {
+    let strength = 0;
+    if (password.length >= 8) strength += 25;
+    if (password.match(/[a-z]/)) strength += 15;
+    if (password.match(/[A-Z]/)) strength += 20;
+    if (password.match(/[0-9]/)) strength += 20;
+    if (password.match(/[^a-zA-Z0-9]/)) strength += 20;
+    return strength;
+  };
+
+  const getPasswordStrengthLabel = (strength: number) => {
+    if (strength === 0) return "";
+    if (strength < 25) return "Muito Fraca";
+    if (strength < 50) return "Fraca";
+    if (strength < 75) return "Boa";
+    if (strength < 100) return "Muito Boa";
+    return "Excelente!";
+  };
+
+  const getPasswordStrengthColor = (strength: number) => {
+    if (strength < 50) return "bg-red-500";
+    if (strength < 75) return "bg-orange-500";
+    return "bg-green-500";
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    let formIsValid = true;
+    let newErrors = { ...errors };
+
+    if (!validatePhone(formData.phone)) {
+      newErrors.phone = "Número de telefone inválido";
+      formIsValid = false;
+    } else {
+      newErrors.phone = "";
+    }
+
+    if (formData.password.length < 8) {
+      newErrors.password = "A senha deve ter pelo menos 8 caracteres";
+      formIsValid = false;
+    } else {
+      newErrors.password = "";
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "As senhas precisam ser iguais";
+      formIsValid = false;
+    } else {
+      newErrors.confirmPassword = "";
+    }
+
+    setErrors(newErrors);
+
+    if (!formIsValid) {
+      return;
+    }
+
+    setLoading(true);
+
+    const { confirmPassword, phone, ...requestBody } = formData;
+    try {
+      const response = await createUser({
+        ...requestBody,
+        phone: phone.replace(/\D/g, ""),
+      });
+      console.log("User created successfully:", response);
+      setSuccessMessage("Usuário criado com sucesso!");
+      setFormData({
+        name: "",
+        lastname: "",
+        birthdate: "",
+        email: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+      });
+      setPasswordStrength(0);
+    } catch (error: any) {
+      console.error("Failed to create user:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrors({ ...errors, form: error.response.data.message });
+      } else {
+        setErrors({ ...errors, form: "Falha ao criar usuário. Por favor, tente novamente." });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="h-full w-full flex-col justify-start">
       <img
         style={{ cursor: "pointer" }}
-        className={`w-44 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
-          } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
-          }`}
+        className="w-44 ml-10 mt-10 md:mt-10 md:ml-10"
         src={anywhereLogo}
         alt="logo"
       />
 
-      <div className="flex flex-col items-center mt-16">
-        <p
-          className={`text-3xl mt-0 w-xl ${window.innerWidth <= 1366 && window.innerHeight < 1408
-            ? "mb-0"
-            : "md:mb-0"
-            } ${window.innerWidth < 500 ? "text-2xl" : "text-base sm:text-3xl"
-            } text-customVermelho font-semibold text-center justify-center font-[inter] ${window.innerWidth <= 1366 && window.innerHeight < 1408
-              ? "text-2xl"
-              : "text-base sm:text-3xl"
-            } ${window.innerWidth <= 1366 && window.innerHeight < 1408
-              ? "mt-0"
-              : "md:mt-0"
-            }`}
-        >
+      <div className="flex flex-col items-center">
+        <p className="text-3xl mt-0 w-xl text-customVermelho font-semibold text-center justify-center font-[inter] md:mb-0">
           Dentro de instantes você fará parte da nossa plataforma
         </p>
-        <span
-          className={`${window.innerWidth <= 1366 && window.innerHeight < 1408
-            ? "text-lg"
-            : "text-base sm:text-3xl"
-            } ${window.innerWidth >= 2560 && window.innerWidth < 3440
-              ? "block"
-              : "inline-block"
-            } ${window.innerWidth < 1366 ? "" : "text-center "
-            } text-black opacity-60 font-normal justify-center`}
-        >
-          Preencha corretamente os campos a baixo.
+        <span className="text-base sm:text-3xl text-black opacity-60 font-normal justify-center md:text-center">
+          Preencha corretamente os campos abaixo.
         </span>
       </div>
 
-      <div className="formInputsUser mt-30">
-        <div className={`mt-20 text-center`}>
-          <p className="text-2xl mb-5 font-[Poppins]">
-            Nome no documento de indentificação
-          </p>
-          <form>
+      <form className="formInputsUser mt-10 md:mt-20" onSubmit={handleSubmit}>
+        <div className="flex justify-center items-start flex-wrap">
+          <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
+            <p className="text-2xl mb-5 font-[Poppins]">Nome</p>
             <input
-              className="w-2/6 h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full h-12 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
               type="text"
-              placeholder="Insira seu nome aqui!"
+              placeholder="Ex: João"
+              required
             />
-          </form>
-        </div>
-
-        <div className={`mt-10 text-center`}>
-          <p className="text-2xl mb-5 font-[Poppins]">
-            Sobrenome no documento de indentificação
-          </p>
-          <form>
+            {errors.name && <div className="text-red-500">{errors.name}</div>}
+          </div>
+          <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
+            <p className="text-2xl mb-5 font-[Poppins]">Sobrenome</p>
             <input
-              className="w-2/6 h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              className="w-full h-12 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
               type="text"
-              placeholder="Insira seu primeiro nome aqui!"
+              placeholder="Ex: Silva da Costa"
+              required
             />
-          </form>
-          <span className="text-black opacity-60 font-normal text-lg mt-5">
-            Certifique-se de que seja igual ao nome completo no seu documento de <br /> indentificação oficial.
-          </span>
-        </div>
-
-        <div className={`mt-10 text-center`}>
-          <p className="text-2xl mb-5 font-[Poppins]">
-            Data de nascimento
-          </p>
-
-          <form>
+            {errors.lastname && <div className="text-red-500">{errors.lastname}</div>}
+          </div>
+          <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
+            <p className="text-2xl mb-5 font-[Poppins]">Data de nascimento</p>
             <input
-              className="w-2/6 h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+              name="birthdate"
+              value={formData.birthdate}
+              onChange={handleChange}
+              className="w-full h-12 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
               type="date"
               placeholder="Insira sua data de nascimento aqui!"
+              required
             />
-          </form>
+            {errors.birthdate && <div className="text-red-500">{errors.birthdate}</div>}
+          </div>
         </div>
 
-
-        <div className={`mt-10 text-center`}>
-          <p className="text-2xl mb-5 font-[Poppins]">
-            Email
-          </p>
-          <form>
-            <input
-              className="w-2/6 h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
-              type="email"
-              placeholder="Insira seu email aqui!"
-            />
-          </form>
+        <div className="flex justify-center items-start mt-10">
+          <div className="w-full md:w-4/6 flex justify-evenly">
+            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+              <p className="text-2xl mb-5 font-[Poppins]">Email</p>
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+                type="email"
+                placeholder="Ex: joaosilva@gmail.com"
+                required
+              />
+              {errors.email && <div className="text-red-500">{errors.email}</div>}
+            </div>
+            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+              <p className="text-2xl mb-5 font-[Poppins]">Telefone</p>
+              <InputMask
+                mask="(99) 99999-9999"
+                value={formData.phone}
+                onChange={handleChange}
+                name="phone"
+                className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+                placeholder="Ex: (73) 99999-9999"
+                required
+              />
+              {errors.phone && <div className="text-red-500">{errors.phone}</div>}
+            </div>
+          </div>
         </div>
 
-        <div className={`mt-10 text-center`}>
-          <p className="text-2xl mb-5 font-[Poppins]">
-            Telefone
-          </p>
-          <form>
-            <input
-              className="w-2/6 h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
-              type="tel"
-              placeholder="Insira seu telefone aqui!"
-            />
-          </form>
+        <div className="flex justify-center items-start mt-10">
+          <div className="w-full md:w-4/6 flex justify-evenly">
+            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+              <p className="text-2xl mb-2 font-[Poppins]">Senha</p>
+              <input
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+                type="password"
+                placeholder="Insira sua senha"
+                required
+              />
+              {errors.password && <div className="text-red-500">{errors.password}</div>}
+              <div className="w-full mt-2">
+                <p className="text-base font-[Poppins] mb-1 text-left">Força da Senha:</p>
+                <div className="flex items-center">
+                  <div className="w-2/4 bg-gray-200 rounded-full h-2.5">
+                    <div className={`h-2.5 rounded-full ${getPasswordStrengthColor(passwordStrength)}`} style={{ width: `${passwordStrength}%` }}></div>
+                  </div>
+                  <span className="ml-2 text-sm font-[Poppins]">
+                    {getPasswordStrengthLabel(passwordStrength)}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+              <p className="text-2xl mb-5 font-[Poppins]">Repita a senha</p>
+              <input
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
+                type="password"
+                placeholder="Repita sua senha"
+                required
+              />
+              {errors.confirmPassword && <div className="text-red-500">{errors.confirmPassword}</div>}
+            </div>
+          </div>
         </div>
 
-        <div className={`mt-20 text-center`}>
-          <p className="text-2xl mb-10 font-[Poppins]">
-            Adicione fotos da sua propriedade
-          </p>
-        </div>
+        {successMessage && (
+          <div className="text-green-500 font-[Poppins] font-medium text-lg text-center mt-4">{successMessage}</div>
+        )}
 
-        <div className="h-auto w-full flex flex-col items-center">
-          <FileInputUser />
-        </div>
-
-        <div className="flex justify-center items-center mt-6">
-          <label htmlFor="termos-de-uso" className="flex items-center cursor-pointer">
-            <input type="checkbox" id="termos-de-uso" className="mr-2" />
-          </label>
-          <span>Aceitar <Link to="/termos-de-uso" className="text-azulLogo underline">Termos de uso</Link></span>
-        </div>
-
-        <div className="flex justify-center">
-          <button className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out">
-            Concluir cadastro
+        <div className="flex justify-center mt-10">
+          <button
+            className={`w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md transform transition duration-300 ease-in-out ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? 'Carregando...' : 'Concluir cadastro'}
           </button>
         </div>
-
-      </div>
+      </form>
       <Footer />
     </div>
-  )
+  );
 }
