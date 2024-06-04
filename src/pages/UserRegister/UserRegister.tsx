@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
+import InputMask from "react-input-mask";
 import anywhereLogo from "../../assets/images/Anywhere.svg";
 import Footer from "../../components/Footer/Footer";
 import { createUser } from '../../config/config';
@@ -15,29 +16,75 @@ export default function UserRegister() {
     confirmPassword: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    lastname: "",
+    birthdate: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    form: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000); 
+
+    return () => clearTimeout(timer);
+  }, [successMessage]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const formattedPhone = value.replace(/\D/g, "");
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: name === "phone" ? formattedPhone : value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      setErrors({ ...errors, confirmPassword: "As senhas precisam ser iguais" });
       return;
     }
 
-    const { password, confirmPassword, ...requestBody } = formData;
+    setLoading(true);
+
+    const { password, confirmPassword, phone, ...requestBody } = formData;
     try {
-      const response = await createUser(requestBody);
+      const response = await createUser({
+        ...requestBody,
+        phone: phone.replace(/\D/g, ""),
+      });
       console.log("User created successfully:", response);
-    } catch (error) {
+      setSuccessMessage("Usuário criado com sucesso!");
+      setFormData({
+        name: "",
+        lastname: "",
+        birthdate: "",
+        email: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error: any) {
       console.error("Failed to create user:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrors({ ...errors, form: error.response.data.message });
+      } else {
+        setErrors({ ...errors, form: "Falha ao criar usuário. Por favor, tente novamente." });
+      }
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div className="h-full w-full flex-col justify-start">
       <img
@@ -67,7 +114,9 @@ export default function UserRegister() {
               className="w-full h-12 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
               type="text"
               placeholder="Ex: João"
+              required
             />
+            {errors.name && <div className="text-red-500">{errors.name}</div>}
           </div>
           <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
             <p className="text-2xl mb-5 font-[Poppins]">Sobrenome</p>
@@ -78,7 +127,9 @@ export default function UserRegister() {
               className="w-full h-12 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
               type="text"
               placeholder="Ex: Silva da Costa"
+              required
             />
+            {errors.lastname && <div className="text-red-500">{errors.lastname}</div>}
           </div>
           <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
             <p className="text-2xl mb-5 font-[Poppins]">Data de nascimento</p>
@@ -89,7 +140,9 @@ export default function UserRegister() {
               className="w-full h-12 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
               type="date"
               placeholder="Insira sua data de nascimento aqui!"
+              required
             />
+            {errors.birthdate && <div className="text-red-500">{errors.birthdate}</div>}
           </div>
         </div>
 
@@ -104,18 +157,22 @@ export default function UserRegister() {
                 className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
                 type="email"
                 placeholder="Ex: joaosilva@gmail.com"
+                required
               />
+              {errors.email && <div className="text-red-500">{errors.email}</div>}
             </div>
             <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
               <p className="text-2xl mb-5 font-[Poppins]">Telefone</p>
-              <input
-                name="phone"
+              <InputMask
+                mask="(99) 99999-9999"
                 value={formData.phone}
                 onChange={handleChange}
+                name="phone"
                 className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
-                type="tel"
                 placeholder="Ex: (73) 99999-9999"
+                required
               />
+              {errors.phone && <div className="text-red-500">{errors.phone}</div>}
             </div>
           </div>
         </div>
@@ -131,7 +188,9 @@ export default function UserRegister() {
                 className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
                 type="password"
                 placeholder="Insira sua senha"
+                required
               />
+              {errors.password && <div className="text-red-500">{errors.password}</div>}
             </div>
             <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
               <p className="text-2xl mb-5 font-[Poppins]">Repita a senha</p>
@@ -142,21 +201,24 @@ export default function UserRegister() {
                 className="w-full h-16 text-lg text-center border border-solid border-gray-300 rounded-xl px-4 py-2 focus:outline-none shadow-md"
                 type="password"
                 placeholder="Repita sua senha"
+                required
               />
+              {errors.confirmPassword && <div className="text-red-500">{errors.confirmPassword}</div>}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center items-center mt-6">
-          <label htmlFor="termos-de-uso" className="flex items-center cursor-pointer">
-            <input type="checkbox" id="termos-de-uso" className="mr-2" />
-          </label>
-          <span>Aceitar <Link to="/termos-de-uso" className="text-azulLogo underline">Termos de uso</Link></span>
-        </div>
+        {successMessage && (
+          <div className="text-green-800 font-[Poppins] text-lg text-center mt-4">{successMessage}</div>
+        )}
 
-        <div className="flex justify-center">
-          <button className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out">
-            Concluir cadastro
+        <div className="flex justify-center mt-10">
+          <button
+            className="w-96 h-14 bg-azulLogo text-white text-lg font-[Poppins] font-medium rounded-xl px-4 py-2 mt-6 focus:outline-none shadow-md hover:scale-105 transform transition duration-300 ease-in-out"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? 'Carregando...' : 'Concluir cadastro'}
           </button>
         </div>
       </form>
