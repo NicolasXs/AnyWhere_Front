@@ -170,9 +170,9 @@ export default function UserRegister() {
       </div>
 
       <form className="formInputsUser mt-10 md:mt-20" onSubmit={handleSubmit}>
-        <div className="flex justify-center items-start flex-wrap">
-          <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
-            <p className="text-2xl mb-5 font-[Poppins]">Nome</p>
+        <div className="flex justify-center items-start flex-wrap w-full md:w-4/6 mx-auto">
+          <div className="mt-4 md:mt-0 text-center w-full sm:w-1/2 md:w-1/3 px-1">
+            <p className="text-2xl mb-2 font-[Poppins] w-full">Nome</p>
             <input
               name="name"
               value={formData.name}
@@ -184,8 +184,8 @@ export default function UserRegister() {
             />
             {errors.name && <div className="text-red-500">{errors.name}</div>}
           </div>
-          <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
-            <p className="text-2xl mb-5 font-[Poppins]">Sobrenome</p>
+          <div className="mt-4 md:mt-0 text-center w-full sm:w-1/2 md:w-1/3 px-1">
+            <p className="text-2xl mb-2 font-[Poppins] w-full">Sobrenome</p>
             <input
               name="lastname"
               value={formData.lastname}
@@ -197,8 +197,8 @@ export default function UserRegister() {
             />
             {errors.lastname && <div className="text-red-500">{errors.lastname}</div>}
           </div>
-          <div className="mt-10 md:mt-0 text-center w-full sm:w-1/2 md:w-1/4 px-2">
-            <p className="text-2xl mb-5 font-[Poppins]">Data de nascimento</p>
+          <div className="mt-4 md:mt-0 text-center w-full sm:w-1/2 md:w-1/3 px-1">
+            <p className="text-2xl mb-2 font-[Poppins] w-full">Data de nascimento</p>
             <input
               name="birthdate"
               value={formData.birthdate}
@@ -212,9 +212,9 @@ export default function UserRegister() {
           </div>
         </div>
 
-        <div className="flex justify-center items-start mt-10">
-          <div className="w-full md:w-4/6 flex justify-evenly">
-            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+        <div className="flex justify-center items-start mt-10 w-full md:w-4/6 mx-auto">
+          <div className="w-full flex justify-evenly">
+            <div className="text-center w-full sm:w-2/5 md:w-1/2 px-2">
               <p className="text-2xl mb-5 font-[Poppins]">Email</p>
               <input
                 name="email"
@@ -227,7 +227,7 @@ export default function UserRegister() {
               />
               {errors.email && <div className="text-red-500">{errors.email}</div>}
             </div>
-            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+            <div className="text-center w-full sm:w-2/5 md:w-1/2 px-2">
               <p className="text-2xl mb-5 font-[Poppins]">Telefone</p>
               <InputMask
                 mask="(99) 99999-9999"
@@ -243,9 +243,9 @@ export default function UserRegister() {
           </div>
         </div>
 
-        <div className="flex justify-center items-start mt-10">
-          <div className="w-full md:w-4/6 flex justify-evenly">
-            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+        <div className="flex justify-center items-start mt-10 w-full md:w-4/6 mx-auto">
+          <div className="w-full flex justify-evenly">
+            <div className="text-center w-full sm:w-2/5 md:w-1/2 px-2">
               <p className="text-2xl mb-2 font-[Poppins]">Senha</p>
               <input
                 name="password"
@@ -269,7 +269,7 @@ export default function UserRegister() {
                 </div>
               </div>
             </div>
-            <div className="text-center w-full sm:w-2/5 md:w-5/12 px-2">
+            <div className="text-center w-full sm:w-2/5 md:w-1/2 px-2">
               <p className="text-2xl mb-5 font-[Poppins]">Repita a senha</p>
               <input
                 name="confirmPassword"
