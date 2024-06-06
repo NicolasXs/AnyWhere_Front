@@ -18,7 +18,7 @@ export default function LoginPage() {
           alt="logo"
         />
         <p
-          className={`text-3xl mt-10 ${window.innerWidth <= 1366 && window.innerHeight < 1408
+          className={`text-3xl mt-10 ${window.innerWidth <= 1366 && window.innerHeight < 1420
               ? "mb-0"
               : "md:mb-20"
             } text-customVermelho font-semibold text-center justify-start font-[inter] ${window.innerWidth <= 1366 && window.innerHeight < 1408
