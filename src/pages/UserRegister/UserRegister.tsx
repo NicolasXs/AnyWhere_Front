@@ -3,6 +3,7 @@ import InputMask from "react-input-mask";
 import anywhereLogo from "../../assets/images/Anywhere.svg";
 import Footer from "../../components/Footer/Footer";
 import { createUser } from '../../config/config';
+import { Link } from "react-router-dom";
 
 export default function UserRegister() {
   const [formData, setFormData] = useState({
@@ -153,12 +154,14 @@ export default function UserRegister() {
 
   return (
     <div className="h-full w-full flex-col justify-start">
-      <img
-        style={{ cursor: "pointer" }}
-        className="w-44 ml-10 mt-10 md:mt-10 md:ml-10"
-        src={anywhereLogo}
-        alt="logo"
-      />
+      <Link to="/login">
+        <img
+          style={{ cursor: "pointer" }}
+          className="w-44 ml-10 mt-10 md:mt-10 md:ml-10"
+          src={anywhereLogo}
+          alt="logo"
+        />
+      </Link>
 
       <div className="flex flex-col items-center">
         <p className="text-3xl mt-0 w-xl text-customVermelho font-semibold text-center justify-center font-[inter] md:mb-0">

@@ -10,6 +10,7 @@ import AccommodationInfo from "./components/AccommodationInfo";
 import { FileInput } from "./components/FileInput";
 import TitleAndDescription from "./components/TitleAndDescription";
 import RegisterButton from "./components/RegisterButton";
+import { Link } from "react-router-dom";
 // import SpaceDescription2 from "./components/spaceDescription2";
 
 export default function PropertyRegister() {
@@ -35,13 +36,16 @@ export default function PropertyRegister() {
   return (
     <div className={`flex ${window.innerWidth < 500 ? "p-5" : "p-0"}`}>
       <div className="h-screen w-screen flex-col justify-start">
-        <img
-          className={`w-44 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
-            } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
-            }`}
-          src={anywhereLogo}
-          alt="logo"
-        />
+        <Link to="/login">
+          <img
+            className={`w-44 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
+              } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-0"
+              }`}
+            src={anywhereLogo}
+            alt="logo"
+          />
+        </Link>
+
         <div className="flex justify-center items-center">
           <div className="flex flex-col items-center">
             <p
@@ -76,7 +80,7 @@ export default function PropertyRegister() {
 
         {/* descrição do espaço abaixo */}
         <SpaceDescription />
-        
+
         {/* <SpaceDescription2 /> */}
 
 
