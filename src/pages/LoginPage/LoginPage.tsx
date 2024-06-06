@@ -33,7 +33,7 @@ export default function LoginPage() {
           <span
             className={`${window.innerWidth <= 1366 && window.innerHeight < 1408
                 ? "text-lg"
-                : "text-base sm:text-3xl"
+                : "text-base sm:text-4xl"
               } ${window.innerWidth >= 2560 && window.innerWidth < 3440
                 ? "block"
                 : "inline-block"
