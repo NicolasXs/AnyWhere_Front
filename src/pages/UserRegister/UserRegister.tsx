@@ -154,7 +154,7 @@ export default function UserRegister() {
 
   return (
     <div className="h-full w-full flex-col justify-start">
-      <Link to="/login">
+      <Link to="/">
         <img
           style={{ cursor: "pointer" }}
           className="w-44 ml-10 mt-10 md:mt-10 md:ml-10"
@@ -249,7 +249,7 @@ export default function UserRegister() {
         <div className="flex justify-center items-start mt-10 w-full md:w-4/6 mx-auto">
           <div className="w-full flex justify-evenly">
             <div className="text-center w-full sm:w-2/5 md:w-1/2 px-2">
-              <p className="text-2xl mb-2 font-[Poppins]">Senha</p>
+              <p className="text-2xl mb-5 font-[Poppins]">Senha</p>
               <input
                 name="password"
                 value={formData.password}

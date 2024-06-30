@@ -85,7 +85,7 @@ export default function AccommodationInfo() {
                                 onChange={(e) =>
                                     setGuests(Math.max(1, parseInt(e.target.value)))
                                 }
-                                className="w-20 text-center pr-0 bg-white border-none"
+                                className="w-20 text-center pr-0 bg-[#f7f7f7] border-none"
                             />
                             <button type="button" onClick={incrementGuests} className="ml-0">
                                 <img
@@ -118,7 +118,7 @@ export default function AccommodationInfo() {
                                 onChange={(e) =>
                                     setRooms(Math.max(1, parseInt(e.target.value)))
                                 }
-                                className="w-20 text-center pr-0 bg-white border-none"
+                                className="w-20 text-center pr-0 bg-[#f7f7f7] border-none"
                             />
                             <button type="button" onClick={incrementRooms} className="ml-0">
                                 <img
@@ -151,7 +151,7 @@ export default function AccommodationInfo() {
                                 onChange={(e) =>
                                     setBeds(Math.max(1, parseInt(e.target.value)))
                                 }
-                                className="w-20 text-center pr-0 bg-white border-none"
+                                className="w-20 text-center pr-0 bg-[#f7f7f7] border-none"
                             />
                             <button type="button" onClick={incrementBeds} className="ml-0">
                                 <img
@@ -184,7 +184,7 @@ export default function AccommodationInfo() {
                                 onChange={(e) =>
                                     setBathrooms(Math.max(1, parseInt(e.target.value)))
                                 }
-                                className="w-20 text-center pr-0 bg-white border-none"
+                                className="w-20 text-center pr-0 bg-[#f7f7f7] border-none"
                             />
                             <button type="button" onClick={incrementBathrooms} className="ml-0">
                                 <img

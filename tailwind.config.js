@@ -87,6 +87,7 @@ module.exports = {
         "5xl": "3.052rem",
       },
       fontFamily: {
+        volkhov: ["Volkhov"],
         poppins: ["Poppins"],
         inter: ["Inter"],
         body: [

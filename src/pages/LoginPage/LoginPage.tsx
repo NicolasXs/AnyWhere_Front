@@ -2,25 +2,29 @@ import imgRigt from "./img/loginPageRightSide.svg";
 import anywhereLogo from "../../assets/images/Anywhere.svg";
 
 import FormLogin from "./components/FormLogin";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   return (
     <div
       className={`flex min-h-screen ${window.innerWidth < 500 ? "p-5" : "p-0"}`}
     >
-      <div className="w-screen flex-1  flex-col justify-start">
-        <img
-          style={{ cursor: "pointer" }}
-          className={`w-48 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
-            } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-10"
-            }`}
-          src={anywhereLogo}
-          alt="logo"
-        />
+      <div className="w-screen flex-1  flex-col justify-start bg-white">
+        <Link to="/">
+          <img
+            style={{ cursor: "pointer" }}
+            className={`w-48 ml-10 mt-10 ${window.innerWidth < 1366 ? "mt-5" : "md:mt-10"
+              } ${window.innerWidth < 1366 ? "ml-5" : "md:ml-10"} ${window.innerWidth < 1366 ? "mb-5" : "md:mb-10"
+              }`}
+            src={anywhereLogo}
+            alt="logo"
+          />
+
+        </Link>
         <p
           className={`text-3xl mt-10 ${window.innerWidth <= 1366 && window.innerHeight < 1420
-              ? "mb-0"
-              : "md:mb-20"
+            ? "mb-0"
+            : "md:mb-20"
             } text-customVermelho font-semibold text-center justify-start font-[inter] ${window.innerWidth <= 1366 && window.innerHeight < 1408
               ? "text-2xl"
               : "text-base sm:text-2xl"
@@ -32,8 +36,8 @@ export default function LoginPage() {
           Estamos felizes em tê-lo de volta!
           <span
             className={`${window.innerWidth <= 1366 && window.innerHeight < 1408
-                ? "text-lg"
-                : "text-base sm:text-4xl"
+              ? "text-lg"
+              : "text-base sm:text-4xl"
               } ${window.innerWidth >= 2560 && window.innerWidth < 3440
                 ? "block"
                 : "inline-block"
