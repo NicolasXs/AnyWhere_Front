@@ -154,7 +154,7 @@ export default function UserRegister() {
 
   return (
     <div className="h-full w-full flex-col justify-start">
-      <Link to="/login">
+      <Link to="/">
         <img
           style={{ cursor: "pointer" }}
           className="w-44 ml-10 mt-10 md:mt-10 md:ml-10"

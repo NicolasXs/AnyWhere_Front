@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NotFoundImg from "./assets/images/weberror.jpg";
+import NotFoundImg from "./assets/images/AnimatednotFound.svg";
 
 export default function NotFoundPage() {
 

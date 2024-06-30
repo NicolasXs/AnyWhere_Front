@@ -9,7 +9,7 @@ export default function LoginPage() {
     <div
       className={`flex min-h-screen ${window.innerWidth < 500 ? "p-5" : "p-0"}`}
     >
-      <div className="w-screen flex-1  flex-col justify-start">
+      <div className="w-screen flex-1  flex-col justify-start bg-white">
         <Link to="/">
           <img
             style={{ cursor: "pointer" }}
